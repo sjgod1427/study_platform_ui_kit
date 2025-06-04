@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:canwa/Screens/course_reminders_screen.dart'; // Import the new reminders screen
 
 // Course Progress Model
 class CourseProgress {
@@ -139,7 +140,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               elevation: 0,
               leading: Container(
                 margin: const EdgeInsets.all(8),
-
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.3), // Semi-transparent white
+                  shape: BoxShape.circle,
+                ),
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () => Navigator.of(context).pop(),
@@ -148,10 +152,21 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               actions: [
                 Container(
                   margin: const EdgeInsets.all(8),
-
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3), // Semi-transparent white
+                    shape: BoxShape.circle,
+                  ),
                   child: IconButton(
                     icon: const Icon(Icons.more_horiz, color: Colors.white),
-                    onPressed: () {},
+                    onPressed: () {
+                      // Navigate to the new CourseRemindersScreen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CourseRemindersScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -163,7 +178,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             top: MediaQuery.of(context).size.height * 0.35 - 30,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[50],
+                color: Colors.grey[50], // Light grey background for content
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(30.0),
                 ),
@@ -380,98 +395,262 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     Color primaryColor,
     TextTheme textTheme,
   ) {
+    // This data is adjusted to match the image content for "Week 1: Foundations"
+    // and includes placeholder images where appropriate.
+    final List<Map<String, dynamic>> lessons = [
+      {
+        'title': 'Building Strong Foundations',
+        'date': 'Monday, 3 Feb 2025',
+        'image': 'https://picsum.photos/id/1004/100/80',
+        'type': 'completed',
+        'description':
+            'Learn basic grammar, vocabulary, and pronunciation for daily use.',
+        'progress_percentage': null,
+        'bullet_points': [],
+      },
+      {
+        'title': 'Skill Expansion',
+        'date': 'Monday, 3 Feb 2025',
+        'image': 'https://picsum.photos/id/1011/100/80',
+        'type': 'in_progress',
+        'description':
+            'Improve speaking, listening, and vocabulary for everyday conversations.',
+        'progress_percentage': 0.30,
+        'bullet_points': [
+          'Learn how to ask and answer questions.',
+          'Improve listening comprehension with real-life dialogues.',
+          'Expand vocabulary for daily conversations.',
+        ],
+      },
+      {
+        'title': 'Real-World Mastery',
+        'date': 'Monday, 3 Feb 2025',
+        'image': 'https://picsum.photos/id/1005/100/80',
+        'type': 'locked',
+        'description': 'Focus on workplace, travel, and social fluency.',
+        'progress_percentage': 0.0,
+        'bullet_points': [],
+      },
+      // You can add more lessons here to match the 20 total lessons if needed for progress
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Course Lessons',
-          style: textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Week 1: Foundations',
+                  style: textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  'Introduction to English Basics',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100], // Light grey background
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.calendar_month, color: Colors.black),
+                onPressed: () {},
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: _courseProgress.totalLessons,
+          itemCount: lessons.length,
           itemBuilder: (context, index) {
-            final isCompleted = _courseProgress.lessonCompletionStatus[index];
-            final isNext =
-                !isCompleted &&
-                (index == 0 ||
-                    _courseProgress.lessonCompletionStatus[index - 1]);
+            final lesson = lessons[index];
+            final bool isCompleted = lesson['type'] == 'completed';
+            final bool isInProgress = lesson['type'] == 'in_progress';
+            final bool isLocked = lesson['type'] == 'locked';
 
-            return Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                tileColor: Colors.white,
-                leading: CircleAvatar(
-                  backgroundColor:
-                      isCompleted
-                          ? primaryColor
-                          : isNext
-                          ? primaryColor.withOpacity(0.2)
-                          : Colors.grey[300],
-                  child:
-                      isCompleted
-                          ? const Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 18,
-                          )
-                          : Text(
-                            '${index + 1}',
-                            style: TextStyle(
-                              color: isNext ? primaryColor : Colors.grey[600],
-                              fontWeight: FontWeight.bold,
+            return Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              lesson['image']!,
+                              height: 80, // Reduced height
+                              width: 80, // Reduced width
+                              fit: BoxFit.cover,
                             ),
                           ),
-                ),
-                title: Text(
-                  'Lesson ${index + 1}: ${_getLessonTitle(index)}',
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight:
-                        isCompleted ? FontWeight.bold : FontWeight.normal,
-                    color: isCompleted ? Colors.black : Colors.grey[700],
-                  ),
-                ),
-                subtitle: Text(
-                  isCompleted
-                      ? 'Completed'
-                      : isNext
-                      ? 'Ready to start'
-                      : 'Locked',
-                  style: textTheme.bodySmall?.copyWith(
-                    color:
-                        isCompleted
-                            ? primaryColor
-                            : isNext
-                            ? Colors.orange
-                            : Colors.grey[500],
-                  ),
-                ),
-                trailing:
-                    isNext
-                        ? IconButton(
-                          icon: Icon(
-                            Icons.play_circle_fill,
-                            color: primaryColor,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  lesson['date']!,
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  lesson['title']!,
+                                  style: textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  lesson['description']!,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey[700],
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
                           ),
-                          onPressed: () => _markLessonComplete(index),
-                        )
-                        : null,
-                onTap: isNext ? () => _markLessonComplete(index) : null,
-              ),
+                          if (isCompleted)
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.check, color: Colors.white, size: 16),
+                            ),
+                          if (isInProgress)
+                            SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 48,
+                                    height: 48,
+                                    child: CircularProgressIndicator(
+                                      value: lesson['progress_percentage'],
+                                      strokeWidth: 4,
+                                      backgroundColor: Colors.grey[200],
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${(lesson['progress_percentage'] * 100).toInt()}%',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (isLocked)
+                            SizedBox(
+                              width: 48, // Occupy similar space for consistency
+                              height: 48,
+                              child: Center(
+                                child: Text(
+                                  '0%', // Showing 0% for locked as per image
+                                  style: textTheme.bodySmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (isInProgress && lesson['bullet_points'] != null && lesson['bullet_points'].isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: lesson['bullet_points']
+                                .asMap()
+                                .entries
+                                .map<Widget>((entry) {
+                              int idx = entry.key;
+                              String point = entry.value;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      margin: const EdgeInsets.only(top: 6, right: 8),
+                                      decoration: BoxDecoration(
+                                        color: idx == 0 ? primaryColor : Colors.grey[400], // Green for first, grey for others
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        point,
+                                        style: textTheme.bodyMedium?.copyWith(
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             );
           },
         ),
       ],
     );
   }
+
 
   Widget _buildAchievements(
     BuildContext context,
@@ -605,32 +784,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  String _getLessonTitle(int index) {
-    final lessons = [
-      'Basic Greetings',
-      'Introducing Yourself',
-      'Common Phrases',
-      'Numbers & Time',
-      'Family & Friends',
-      'Daily Activities',
-      'Food & Drinks',
-      'Shopping Basics',
-      'Directions',
-      'Weather Talk',
-      'Hobbies',
-      'Past Tense',
-      'Future Plans',
-      'Comparisons',
-      'Asking Questions',
-      'Phone Conversations',
-      'Email Writing',
-      'Job Interview',
-      'Travel English',
-      'Final Review',
-    ];
-    return lessons[index % lessons.length];
-  }
-
   Widget _buildMentorsList(BuildContext context, TextTheme textTheme) {
     final List<Map<String, String>> mentors = [
       {'name': 'Ximia Ed', 'image': 'https://picsum.photos/id/1004/200/200'},
@@ -735,7 +888,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
           // Progress bar with milestones
           LayoutBuilder(
             builder: (context, constraints) {
-              return Container(
+              return SizedBox(
                 height: 80,
                 child: Stack(
                   children: [

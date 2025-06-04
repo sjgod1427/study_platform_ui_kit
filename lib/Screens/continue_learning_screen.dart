@@ -28,6 +28,7 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
           onPressed: () {
@@ -36,8 +37,9 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
         ),
         title: Text(
           'Continue Learning',
-          style: textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
         ),
@@ -61,15 +63,24 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
-                prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 4,
+                    top: 12,
+                    bottom: 12,
+                  ), // Add padding to the left of the icon
+                  child: Icon(Icons.search, color: Colors.grey[600], size: 24),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
                 fillColor: Colors.grey[100],
+                isDense: true, // Reduces the overall height of the input field
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
+                  vertical: 12.0, // Adjusted vertical padding for hint text
                   horizontal: 16.0,
                 ),
               ),
@@ -151,53 +162,67 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
               course['image']!,
-              height: 90,
-              width: 90,
+              height: 70,
+              width: 70,
               fit: BoxFit.cover,
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Icon(Icons.more_vert, color: Colors.grey[600]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      course['title']!,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      course['author']!,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    LinearProgressIndicator(
+                      value: course['progress'],
+                      backgroundColor: Colors.grey[200],
+                      valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+                      minHeight: 6,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${(course['progress'] * 100).toInt()}% completed',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      hoverColor: Colors.black.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () {},
+                      child: Icon(Icons.more_vert, color: Colors.grey[600]),
+                    ),
                   ),
-                ),
-                Text(
-                  course['title']!,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  course['author']!,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                LinearProgressIndicator(
-                  value: course['progress'],
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                  minHeight: 6,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${(course['progress'] * 100).toInt()}% completed',
-                  style: textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -211,8 +236,7 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
   final List<Map<String, dynamic>> _continueLearningCourses = [
     {
       'image': 'https://picsum.photos/id/1043/100/80',
-      'title':
-          'Color Theory for UI Designers: Creating Visually Stunning Interfaces',
+      'title': 'Songwriting with Strings: Composing and Arranging for Guitar',
       'author': 'Daniel Lewis',
       'progress': 0.75,
     },

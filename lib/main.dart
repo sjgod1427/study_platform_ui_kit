@@ -1,9 +1,9 @@
+import 'package:canwa/Screens/continue_learning_screen.dart';
+import 'package:canwa/Screens/course_reminders_screen.dart'; // Import the new screen
 import 'package:flutter/material.dart';
 import 'package:pixel_preview/pixel_preview.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:canwa/Screens/course_detail_screen.dart'; // Import the CourseDetailScreen
 
 void main() {
   runApp(const MyApp());
@@ -72,7 +72,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const PixelPreview(
         presets: ScreenPresets(),
-        child: CourseDetailScreen(), // Point to the new CourseDetailScreen
+        child:
+            ContinueLearningScreen(), // Point to the new CourseRemindersScreen
       ),
     );
   }
