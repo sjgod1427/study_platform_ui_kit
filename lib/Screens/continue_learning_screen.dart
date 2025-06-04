@@ -62,6 +62,8 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: TextField(
               decoration: InputDecoration(
+                focusColor: primaryColor.withValues(alpha: 0.02),
+                hoverColor: primaryColor.withValues(alpha: 0.02),
                 hintText: 'Search',
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(
@@ -144,27 +146,23 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
       margin: const EdgeInsets.only(bottom: 16.0),
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: primaryColor.withValues(alpha: 0.02),
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        border: Border.all(width: 1, color: Colors.grey.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              course['image']!,
-              height: 70,
-              width: 70,
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                course['image']!,
+                height: 70,
+                width: 70,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(width: 12),
