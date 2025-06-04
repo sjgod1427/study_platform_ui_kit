@@ -65,12 +65,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       appBar: AppBar(
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color:
-                Colors
-                    .grey[100], // Light grey background for back button as seen in other screens
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
             onPressed: () {
@@ -101,7 +96,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 hintStyle: textTheme.bodyLarge?.copyWith(
                   color: Colors.grey[600],
                 ),
-                prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Icon(Icons.search, color: Colors.grey[600]),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
@@ -142,14 +140,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       margin: const EdgeInsets.only(bottom: 16.0),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16.0,
-                        vertical: 14.0,
+                        vertical: 16.0,
                       ), // Adjusted padding
                       decoration: BoxDecoration(
                         color:
-                            isSelected
-                                ? Colors.grey[100]
-                                : Colors
-                                    .white, // Darker grey for selected, white for unselected
+                            Colors
+                                .white, // Darker grey for selected, white for unselected
                         borderRadius: BorderRadius.circular(12.0),
                         boxShadow: [
                           BoxShadow(
@@ -189,12 +185,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             ),
                           ),
                           if (isSelected)
-                            Icon(
-                              Icons
-                                  .check_box, // Changed to check_box to match square appearance
-                              color:
-                                  primaryColor, // Primary color for checkmark
-                              size: 24,
+                            Container(
+                              width:
+                                  25, // Adjust size as needed for the square container
+                              height:
+                                  25, // Adjust size as needed for the square container
+                              decoration: BoxDecoration(
+                                color:
+                                    primaryColor, // Light background for the container
+                                borderRadius: BorderRadius.circular(
+                                  8.0,
+                                ), // Apply radius to the container
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 20,
+                              ),
                             ),
                         ],
                       ),

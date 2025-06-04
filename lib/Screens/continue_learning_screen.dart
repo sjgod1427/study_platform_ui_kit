@@ -177,7 +177,7 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
                       course['title']!,
                       style: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.black,
                       ),
                       maxLines: 2,

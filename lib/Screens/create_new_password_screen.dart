@@ -202,7 +202,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
                 child: Text(

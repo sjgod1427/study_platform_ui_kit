@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80, // Adjust height as needed
@@ -70,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     'Josse Makima',
-                    style: textTheme.titleLarge?.copyWith(
+                    style: TextStyle(
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -207,14 +209,14 @@ class _HomeScreenState extends State<HomeScreen> {
     int currentPage = 0,
     int totalPages = 0,
   }) {
-    final textTheme = Theme.of(context).textTheme;
     final primaryColor = Theme.of(context).primaryColor;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
-          style: textTheme.titleLarge?.copyWith(
+          style: TextStyle(
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -243,7 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Text(
               'See All',
-              style: textTheme.bodyLarge?.copyWith(
+              style: TextStyle(
+                fontSize: 16,
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
               ),
@@ -295,7 +298,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   'Unleash Your Creative Knowledge!',
-                  style: textTheme.headlineSmall?.copyWith(
+                  style: TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -430,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           final course = courses[index];
           return Container(
-            width: 200, // Fixed width for each card
+            width: 250, // Fixed width for each card
             margin: const EdgeInsets.only(right: 16.0),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -520,7 +524,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 4),
                       Text(
                         course['title']!,
-                        style: textTheme.titleMedium?.copyWith(
+                        style: TextStyle(
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),

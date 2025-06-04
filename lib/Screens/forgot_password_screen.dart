@@ -17,14 +17,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         title: Text(
           'Forgot Password',
-          style: textTheme.titleLarge?.copyWith(
+          style: TextStyle(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -110,8 +111,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const SizedBox(height: 40),
             Text(
               'Reset your password',
-              style: textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w900,
                 color: Colors.black,
               ),
             ),
@@ -132,7 +134,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your email',
-                prefixIcon: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 4),
+                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
@@ -164,7 +169,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 child: Text(

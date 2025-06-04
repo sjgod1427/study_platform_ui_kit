@@ -129,9 +129,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               controller: _fullNameController,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(Icons.person_outline, color: Colors.black),
                 ), // Black icon
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -162,9 +162,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               keyboardType: TextInputType.emailAddress,
               readOnly: true, // Email field is read-only as per image
               decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.mail_outline,
-                  color: Colors.black,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Icon(Icons.mail_outline, color: Colors.black),
                 ), // Black icon
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -188,14 +188,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: Text(
-                  'Save',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    'Save',
+                    style: textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

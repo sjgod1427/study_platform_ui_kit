@@ -25,6 +25,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80, // Adjust height as needed
@@ -50,7 +51,8 @@ class _HomeScreen2State extends State<HomeScreen2> {
                   ),
                   Text(
                     'Josse Makima',
-                    style: textTheme.titleLarge?.copyWith(
+                    style: TextStyle(
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -189,14 +191,14 @@ class _HomeScreen2State extends State<HomeScreen2> {
     String title, {
     VoidCallback? onSeeAllTap,
   }) {
-    final textTheme = Theme.of(context).textTheme;
     final primaryColor = Theme.of(context).primaryColor;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
-          style: textTheme.titleLarge?.copyWith(
+          style: TextStyle(
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -211,7 +213,8 @@ class _HomeScreen2State extends State<HomeScreen2> {
             ),
             child: Text(
               'See All',
-              style: textTheme.bodyLarge?.copyWith(
+              style: TextStyle(
+                fontSize: 16,
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
               ),
