@@ -3,7 +3,7 @@ import 'package:pixel_preview/pixel_preview.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:canwa/Screens/help_and_support_screen.dart'; // Import the new HelpAndSupportScreen
+import 'package:canwa/Screens/course_detail_screen.dart'; // Import the CourseDetailScreen
 
 void main() {
   runApp(const MyApp());
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const PixelPreview(
         presets: ScreenPresets(),
-        child: HelpAndSupportScreen(), // Point to the new HelpAndSupportScreen
+        child: CourseDetailScreen(), // Point to the new CourseDetailScreen
       ),
     );
   }
