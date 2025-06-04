@@ -1,0 +1,456 @@
+import 'package:flutter/material.dart';
+
+class WishlistScreen extends StatefulWidget {
+  const WishlistScreen({super.key});
+
+  @override
+  State<WishlistScreen> createState() => _WishlistScreenState();
+}
+
+class _WishlistScreenState extends State<WishlistScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  int _selectedCategoryIndex =
+      1; // "Science" is selected by default as per image
+
+  final List<Map<String, dynamic>> _categoryChipsWithIcons = [
+    {'name': 'Programming', 'icon': Icons.laptop_mac}, // Placeholder icon
+    {'name': 'Science', 'icon': Icons.public}, // Placeholder icon
+    {'name': 'Design', 'icon': Icons.palette}, // Placeholder icon
+    {'name': 'Business', 'icon': Icons.business_center}, // Placeholder icon
+    {'name': 'Art', 'icon': Icons.brush}, // Placeholder icon
+  ];
+
+  // Modified wishlistCourses to include an isFavorited status for each item
+  final List<Map<String, dynamic>> _wishlistCourses = [
+    {
+      'image': 'https://picsum.photos/id/600/100/80',
+      'category': 'Graphic Design',
+      'title': 'Expert Wireframing for Mobile Design',
+      'rating': 4.9,
+      'reviews': 12990,
+      'author': 'Jerremy Mamika',
+      'price': '\$48',
+      'isFavorited': true, // All items start as favorited as per screenshot
+    },
+    {
+      'image': 'https://picsum.photos/id/338/100/80',
+      'category': 'Science',
+      'title': 'The Complete Solar Energy Course',
+      'rating': 4.9,
+      'reviews': 12990,
+      'author': 'Jerremy Mamika',
+      'price': '\$125',
+      'isFavorited': true,
+    },
+    {
+      'image': 'https://picsum.photos/id/1015/100/80',
+      'category': 'Coding',
+      'title': 'How to convert design to React js Brssic',
+      'rating': 4.9,
+      'reviews': 12990,
+      'author': 'Jerremy Mamika',
+      'price': '\$34',
+      'isFavorited': true,
+    },
+    {
+      'image': 'https://picsum.photos/id/1043/100/80',
+      'category': 'Photography',
+      'title': 'Mastering Street Photography',
+      'rating': 4.8,
+      'reviews': 9870,
+      'author': 'Sarah Doe',
+      'price': '\$75',
+      'isFavorited': true,
+    },
+  ];
+
+  int _selectedIndex =
+      1; // 0 for Home, 1 for Wishlist, 2 for My Course, 3 for Profile
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // In a real app, you would navigate to different screens here.
+    // For now, it just highlights the selected tab.
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ), // Black icon, transparent background
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          'My Wishlist',
+          style: textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.black,
+            ), // Black icon, transparent background
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 16.0,
+            ),
+            child: Column(
+              children: [
+                // Search Bar
+                TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search Something',
+                    prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.close, color: Colors.grey[600]),
+                      onPressed: () {
+                        _searchController.clear();
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey[300]!,
+                        width: 1.5,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 16.0,
+                    ),
+                  ),
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 16),
+
+                // Category Chips
+                SizedBox(
+                  height: 40,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _categoryChipsWithIcons.length,
+                    itemBuilder: (context, index) {
+                      final chipData = _categoryChipsWithIcons[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: _CategoryChipWithIcon(
+                          name: chipData['name']!,
+                          icon: chipData['icon']!,
+                          isSelected: index == _selectedCategoryIndex,
+                          onTap: () {
+                            setState(() {
+                              _selectedCategoryIndex = index;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Wishlist Course List
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 8.0,
+              ),
+              itemCount: _wishlistCourses.length,
+              itemBuilder: (context, index) {
+                final course = _wishlistCourses[index];
+                return _buildWishlistCourseCard(
+                  context,
+                  course,
+                  primaryColor,
+                  textTheme,
+                  index, // Pass index to uniquely identify the card
+                );
+              },
+              separatorBuilder:
+                  (context, index) =>
+                      const SizedBox(height: 16), // Spacing between cards
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              _selectedIndex == 0 ? Icons.home_filled : Icons.home_outlined,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              _selectedIndex == 1 ? Icons.bookmark : Icons.bookmark_border,
+            ),
+            label: 'Wishlist',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              _selectedIndex == 2
+                  ? Icons.play_circle_fill
+                  : Icons.play_circle_outline,
+            ),
+            label: 'My Course',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              _selectedIndex == 3 ? Icons.person : Icons.person_outline,
+            ),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: primaryColor,
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed, // Ensures all labels are shown
+        selectedLabelStyle: textTheme.bodySmall?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: textTheme.bodySmall,
+      ),
+    );
+  }
+
+  Widget _buildWishlistCourseCard(
+    BuildContext context,
+    Map<String, dynamic> course,
+    Color primaryColor,
+    TextTheme textTheme,
+    int index, // Added index to manage individual card state
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.network(
+              course['image']!,
+              height: 100,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      course['category']!,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    GestureDetector(
+                      // Made heart icon functional
+                      onTap: () {
+                        setState(() {
+                          // Toggle the isFavorited status for this specific course
+                          _wishlistCourses[index]['isFavorited'] =
+                              !_wishlistCourses[index]['isFavorited'];
+                        });
+                        // In a real app, you would add/remove from wishlist here
+                      },
+                      child: Icon(
+                        _wishlistCourses[index]['isFavorited']
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color:
+                            _wishlistCourses[index]['isFavorited']
+                                ? Colors.red
+                                : Colors.grey[600],
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  course['title']!,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.amber, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${course['rating']} • (${course['reviews']})',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4), // Added a small space as per image
+                Row(
+                  children: [
+                    Text(
+                      course['author']!,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Spacer(),
+                    Text(
+                      course['price']!,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Reusing and adapting the CategoryChip for icons
+class _CategoryChipWithIcon extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryChipWithIcon({
+    required this.name,
+    required this.icon,
+    this.isSelected = false,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final textTheme = Theme.of(context).textTheme;
+
+    final ButtonStyle style = Theme.of(
+      context,
+    ).outlinedButtonTheme.style!.copyWith(
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (isSelected) {
+          return primaryColor;
+        }
+        return Colors.white; // White background for unselected
+      }),
+      foregroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (isSelected) {
+          return Colors.white;
+        }
+        return Colors.black; // Black text for unselected
+      }),
+      side: WidgetStateProperty.resolveWith<BorderSide>((
+        Set<WidgetState> states,
+      ) {
+        if (isSelected) {
+          return BorderSide(color: primaryColor, width: 1.5);
+        }
+        return BorderSide(
+          color: Colors.grey[300]!,
+          width: 1.5,
+        ); // Light grey border for unselected
+      }),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+      ),
+      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      ),
+    );
+
+    return OutlinedButton(
+      onPressed: onTap,
+      style: style,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: isSelected ? Colors.white : Colors.black, size: 18),
+          const SizedBox(width: 8),
+          Text(
+            name,
+            style: textTheme.bodyLarge?.copyWith(
+              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
