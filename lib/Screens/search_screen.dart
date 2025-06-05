@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Widgets/category_chip.dart'; // Reusing for consistency, though we'll make a new chip type
 
@@ -387,7 +388,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
                             elevation: 0, // No shadow for this button
                           ),
@@ -694,24 +695,11 @@ class __FilterBottomSheetState extends State<_FilterBottomSheet> {
             ),
             const SizedBox(height: 40),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _applyFilters,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                child: Text(
-                  'Apply Filters',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            PrimaryTextButton(
+              text: 'Apply Filters',
+              onPressed: () {
+                _applyFilters();
+              },
             ),
             SizedBox(
               height: MediaQuery.of(context).viewInsets.bottom,

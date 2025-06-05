@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/add_question_screen.dart';
 import 'package:canwa/Screens/continue_learning_screen.dart';
 import 'package:canwa/Screens/course_reminders_screen.dart'; // Import the new screen
 import 'package:canwa/Screens/create_new_password_screen.dart';
@@ -11,6 +12,8 @@ import 'package:canwa/Screens/learning_interests_screen.dart';
 import 'package:canwa/Screens/learning_screen.dart';
 import 'package:canwa/Screens/login_screen.dart';
 import 'package:canwa/Screens/my_course_screen.dart';
+import 'package:canwa/Screens/notification_screen.dart';
+import 'package:canwa/Screens/onboarding_screen.dart';
 import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:canwa/Screens/profile_screen.dart';
 import 'package:canwa/Screens/recommendation_screen.dart';
@@ -92,7 +95,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const PixelPreview(
         presets: ScreenPresets(),
-        child: WishlistScreen(), // Point to the new CourseRemindersScreen
+        child: FaqScreen(), // Point to the new CourseRemindersScreen
       ),
     );
   }

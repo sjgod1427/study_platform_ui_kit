@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
 class AddQuestionScreen extends StatefulWidget {
@@ -110,25 +111,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
             ),
             const Spacer(), // Pushes the button to the bottom
             // Send Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _sendQuestion,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                child: Text(
-                  'Send',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            PrimaryTextButton(text: 'Send'),
           ],
         ),
       ),

@@ -86,19 +86,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey[100], // Light grey background as seen in image
+            color: Colors.transparent, // Light grey background as seen in image
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 18,
+            ), // Black icon
+            onPressed: () {},
           ),
         ),
         title: Text(
           'Notification',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -117,6 +120,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Text(
                   'Today',
                   style: textTheme.titleLarge?.copyWith(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -148,6 +152,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               itemBuilder: (context, index) {
                 final notification = _todayNotifications[index];
                 return _NotificationTile(
+                  onTap: () {},
                   imageUrls: notification['imageUrls'],
                   userName: notification['userName'],
                   messageType: notification['messageType'],
@@ -157,10 +162,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 );
               },
               separatorBuilder:
-                  (context, index) => const Divider(
+                  (context, index) => Divider(
                     height: 32,
-                    thickness: 1,
-                    color: Colors.grey,
+                    thickness: 0.5,
+                    color: Colors.grey.withValues(alpha: 0.5),
                   ),
             ),
             const SizedBox(height: 32),
@@ -169,6 +174,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Text(
               'Yesterday',
               style: textTheme.titleLarge?.copyWith(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -183,6 +189,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               itemBuilder: (context, index) {
                 final notification = _yesterdayNotifications[index];
                 return _NotificationTile(
+                  onTap: () {},
                   imageUrls: notification['imageUrls'],
                   userName: notification['userName'],
                   messageType: notification['messageType'],
@@ -192,10 +199,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 );
               },
               separatorBuilder:
-                  (context, index) => const Divider(
+                  (context, index) => Divider(
                     height: 32,
-                    thickness: 1,
-                    color: Colors.grey,
+                    thickness: 0.5,
+                    color: Colors.grey.withValues(alpha: 0.5),
                   ),
             ),
           ],
@@ -208,10 +215,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
 class _NotificationTile extends StatelessWidget {
   final List<String> imageUrls;
   final String userName;
-  final String messageType; // e.g., "updated class", "updated information"
+  final String messageType;
   final String itemTitle;
   final String time;
   final bool isRead;
+  final VoidCallback? onTap; // Optional callback for tap
 
   const _NotificationTile({
     required this.imageUrls,
@@ -220,6 +228,7 @@ class _NotificationTile extends StatelessWidget {
     required this.itemTitle,
     required this.time,
     this.isRead = false,
+    this.onTap, // Add onTap here
   });
 
   @override
@@ -229,16 +238,15 @@ class _NotificationTile extends StatelessWidget {
 
     Widget avatarWidget;
     if (imageUrls.length > 1) {
-      // Stack two circular avatars
       avatarWidget = SizedBox(
-        width: 50, // Combined width
+        width: 50,
         height: 40,
         child: Stack(
           children: [
             Positioned(
               left: 0,
               child: CircleAvatar(
-                radius: 20, // Slightly smaller to make room for overlap
+                radius: 20,
                 backgroundImage: NetworkImage(imageUrls[0]),
               ),
             ),
@@ -253,70 +261,80 @@ class _NotificationTile extends StatelessWidget {
         ),
       );
     } else {
-      // Single circular avatar
       avatarWidget = CircleAvatar(
-        radius: 24, // Standard size
+        radius: 24,
         backgroundImage: NetworkImage(imageUrls[0]),
       );
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        avatarWidget,
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      color: Colors.transparent, // Allows ripple to show on any background
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8), // Optional for ripple shape
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // User name and message combined
-              RichText(
-                text: TextSpan(
+              avatarWidget,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextSpan(
-                      text: userName,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: userName,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' $messageType : ',
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          TextSpan(
+                            text: itemTitle,
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    TextSpan(
-                      text: ' $messageType : ',
-                      style: textTheme.bodyMedium?.copyWith(
+                    const SizedBox(height: 4),
+                    Text(
+                      time,
+                      style: textTheme.bodySmall?.copyWith(
                         color: Colors.grey[600],
-                      ),
-                    ),
-                    TextSpan(
-                      text: itemTitle,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                time,
-                style: textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
-              ),
+              if (!isRead)
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
-        if (!isRead) // Show dot only if not read
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                color: primaryColor, // Use primary color for unread dot
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }

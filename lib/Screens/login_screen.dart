@@ -1,3 +1,5 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
+import 'package:canwa/Widgets/social_auth_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // For social icons
 
@@ -151,27 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle Log In logic
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-                child: Text(
-                  'Log In',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            PrimaryTextButton(text: 'Login'),
             const SizedBox(height: 24),
             Center(
               child: Text(
@@ -180,79 +162,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Handle Google Login
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  side: BorderSide(color: Colors.grey[300]!),
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Icon(
-                          FontAwesomeIcons.google,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Continue with Google',
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            SocialAuthButton(type: ButtonType.google, onPressed: () {}),
             const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Handle Facebook Login
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  side: BorderSide(color: Colors.grey[300]!),
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Icon(
-                          FontAwesomeIcons.facebook,
-                          color: Colors.blue[800],
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Continue with Facebook',
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            SocialAuthButton(type: ButtonType.facebook, onPressed: () {}),
             const SizedBox(height: 24),
             Center(
               child: RichText(
