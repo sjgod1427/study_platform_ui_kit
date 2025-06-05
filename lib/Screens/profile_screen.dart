@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text(
           'Profile',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -89,6 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       'John Henry',
                       style: textTheme.headlineSmall?.copyWith(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -97,6 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       'johnhenry99@gmail.com',
                       style: textTheme.bodyLarge?.copyWith(
+                        fontSize: 15,
                         color: Colors.grey[600],
                       ),
                     ),
@@ -110,6 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'General',
               style: textTheme.titleLarge?.copyWith(
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -138,6 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               trailing: Switch(
                 value: _isNotificationOn,
+                splashRadius: 18,
                 onChanged: (value) {
                   setState(() {
                     _isNotificationOn = value;
@@ -177,6 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'Other',
               style: textTheme.titleLarge?.copyWith(
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -291,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Icon(
               icon,
               color: Colors.black, // Black icon as per image
-              size: 24,
+              size: 20,
             ),
           ),
           const SizedBox(width: 16),
@@ -299,6 +305,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Text(
               title,
               style: textTheme.titleMedium?.copyWith(
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),

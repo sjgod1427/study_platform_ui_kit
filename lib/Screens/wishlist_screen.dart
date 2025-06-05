@@ -52,6 +52,17 @@ class _WishlistScreenState extends State<WishlistScreen> {
       'price': '\$34',
       'isFavorited': true,
     },
+
+    {
+      'image': 'https://picsum.photos/id/116/100/80',
+      'category': 'Coding',
+      'title': 'How to convert design to React js Brssic',
+      'rating': 4.9,
+      'reviews': 12990,
+      'author': 'Jerremy Mamika',
+      'price': '\$34',
+      'isFavorited': true,
+    },
     {
       'image': 'https://picsum.photos/id/1043/100/80',
       'category': 'Photography',
@@ -94,13 +105,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
             Icons.arrow_back_ios,
             color: Colors.black,
           ), // Black icon, transparent background
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
+          iconSize: 18,
         ),
         title: Text(
           'My Wishlist',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -130,12 +141,22 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     hintText: 'Search Something',
-                    prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.close, color: Colors.grey[600]),
-                      onPressed: () {
-                        _searchController.clear();
-                      },
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        top: 8,
+                        bottom: 8,
+                      ),
+                      child: Icon(Icons.search, color: Colors.grey[600]),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: IconButton(
+                        icon: Icon(Icons.close, color: Colors.grey[600]),
+                        onPressed: () {
+                          _searchController.clear();
+                        },
+                      ),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
@@ -255,120 +276,131 @@ class _WishlistScreenState extends State<WishlistScreen> {
     Map<String, dynamic> course,
     Color primaryColor,
     TextTheme textTheme,
-    int index, // Added index to manage individual card state
+    int index,
   ) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      height: 120,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),
           ),
         ],
       ),
+      clipBehavior: Clip.antiAlias, // Ensures children respect borderRadius
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              course['image']!,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+          // Left Image
+          SizedBox(
+            width: 120,
+            height: double.infinity,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                bottomLeft: Radius.circular(16.0),
+              ),
+              child: Image.network(course['image']!, fit: BoxFit.cover),
             ),
           ),
-          const SizedBox(width: 12),
+          // Right Text Area
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      course['category']!,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Category + Heart Icon
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          course['category']!,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    GestureDetector(
-                      // Made heart icon functional
-                      onTap: () {
-                        setState(() {
-                          // Toggle the isFavorited status for this specific course
-                          _wishlistCourses[index]['isFavorited'] =
-                              !_wishlistCourses[index]['isFavorited'];
-                        });
-                        // In a real app, you would add/remove from wishlist here
-                      },
-                      child: Icon(
-                        _wishlistCourses[index]['isFavorited']
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color:
-                            _wishlistCourses[index]['isFavorited']
-                                ? Colors.red
-                                : Colors.grey[600],
-                        size: 20,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _wishlistCourses[index]['isFavorited'] =
+                                !_wishlistCourses[index]['isFavorited'];
+                          });
+                        },
+                        child: Icon(
+                          _wishlistCourses[index]['isFavorited']
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color:
+                              _wishlistCourses[index]['isFavorited']
+                                  ? Colors.red
+                                  : Colors.grey[600],
+                          size: 18,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  course['title']!,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    ],
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${course['rating']} • (${course['reviews']})',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
-                      ),
+                  // Title
+                  Text(
+                    course['title']!,
+                    style: textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 4), // Added a small space as per image
-                Row(
-                  children: [
-                    Text(
-                      course['author']!,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  // Rating and Reviews
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${course['rating']} • (${course['reviews']})',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
-                    Text(
-                      course['price']!,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    ],
+                  ),
+                  // Author and Price
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          course['author']!,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: Colors.grey[600],
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        course['price']!,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -445,6 +477,7 @@ class _CategoryChipWithIcon extends StatelessWidget {
           Text(
             name,
             style: textTheme.bodyLarge?.copyWith(
+              fontSize: 14,
               color: isSelected ? Colors.white : Colors.black,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),

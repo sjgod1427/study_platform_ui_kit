@@ -112,9 +112,9 @@ class _LearningInterestsScreenState extends State<LearningInterestsScreen> {
               child: ElevatedButton(
                 onPressed: _onDonePressed,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 child: Text(

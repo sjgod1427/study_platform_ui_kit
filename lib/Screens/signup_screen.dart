@@ -24,11 +24,16 @@ class _SignupScreenState extends State<SignupScreen> {
             false, // No back button needed for a signup screen
         title: Row(
           children: [
-            Icon(Icons.book, color: primaryColor), // SkillUp logo icon
+            Icon(
+              Icons.book,
+              color: primaryColor,
+              size: 16,
+            ), // SkillUp logo icon
             const SizedBox(width: 8),
             Text(
               'SkillUp',
               style: textTheme.titleLarge?.copyWith(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -43,7 +48,8 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             Text(
               'Sign up for an account',
-              style: textTheme.headlineMedium?.copyWith(
+              style: TextStyle(
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -51,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 8),
             Text(
               'Creating an account can make you learn and grow quickly.',
-              style: textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
+              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 24),
             Text(
@@ -65,7 +71,10 @@ class _SignupScreenState extends State<SignupScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your full name',
-                prefixIcon: Icon(Icons.person_outline, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 8),
+                  child: Icon(Icons.person_outline, color: Colors.grey[600]),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide:
@@ -92,7 +101,10 @@ class _SignupScreenState extends State<SignupScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your email',
-                prefixIcon: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 8),
+                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
@@ -119,19 +131,25 @@ class _SignupScreenState extends State<SignupScreen> {
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
-                prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.grey[600],
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 8),
+                  child: Icon(Icons.lock_outline, color: Colors.grey[600]),
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.grey[600],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -208,9 +226,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   // Handle Sign Up logic
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 child: Text(

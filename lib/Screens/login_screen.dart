@@ -21,18 +21,26 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         automaticallyImplyLeading:
             false, // No back button needed for a login screen
-        title: Row(
-          children: [
-            Icon(Icons.book, color: primaryColor), // SkillUp logo icon
-            const SizedBox(width: 8),
-            Text(
-              'SkillUp',
-              style: textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            children: [
+              Icon(
+                Icons.book,
+                color: primaryColor,
+                size: 16,
+              ), // SkillUp logo icon
+              const SizedBox(width: 8),
+              Text(
+                'SkillUp',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -42,7 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Text(
               'Welcome Back 👋',
-              style: textTheme.headlineMedium?.copyWith(
+              style: TextStyle(
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -50,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 8),
             Text(
               'Enter your email and password to login',
-              style: textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
+              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 24),
             Text(
@@ -64,7 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your email',
-                prefixIcon: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 8),
+                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
@@ -91,7 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
-                prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 8),
+                  child: Icon(Icons.lock_outline, color: Colors.grey[600]),
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _isPasswordVisible
@@ -144,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 child: Text(
@@ -166,42 +181,74 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              child: OutlinedButton.icon(
+              child: OutlinedButton(
                 onPressed: () {
                   // Handle Google Login
                 },
-                icon: Icon(FontAwesomeIcons.google, color: Colors.black),
-                label: Text(
-                  'Continue with Google',
-                  style: textTheme.titleMedium?.copyWith(color: Colors.black),
-                ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   side: BorderSide(color: Colors.grey[300]!),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Icon(
+                          FontAwesomeIcons.google,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Continue with Google',
+                      style: textTheme.titleMedium?.copyWith(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              child: OutlinedButton.icon(
+              child: OutlinedButton(
                 onPressed: () {
                   // Handle Facebook Login
                 },
-                icon: Icon(FontAwesomeIcons.facebook, color: Colors.blue[800]),
-                label: Text(
-                  'Continue with Facebook',
-                  style: textTheme.titleMedium?.copyWith(color: Colors.black),
-                ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   side: BorderSide(color: Colors.grey[300]!),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Icon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.blue[800],
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Continue with Facebook',
+                      style: textTheme.titleMedium?.copyWith(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

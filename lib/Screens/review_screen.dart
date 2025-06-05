@@ -18,13 +18,13 @@ class _ReviewScreenState extends State<ReviewScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
+          iconSize: 20,
         ),
         title: Text(
           'Review',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -51,6 +51,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         Text(
                           '4.4',
                           style: textTheme.displayLarge?.copyWith(
+                            fontSize: 32,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -253,6 +254,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
           Text(
             text,
             style: textTheme.bodyLarge?.copyWith(
+              fontSize: 14,
               color: Colors.black,
               height: 1.5,
             ),

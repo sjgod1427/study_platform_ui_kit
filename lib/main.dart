@@ -7,6 +7,19 @@ import 'package:canwa/Screens/forgot_password_screen.dart';
 import 'package:canwa/Screens/home_screen.dart';
 import 'package:canwa/Screens/home_screen_2.dart';
 import 'package:canwa/Screens/language_screen.dart';
+import 'package:canwa/Screens/learning_interests_screen.dart';
+import 'package:canwa/Screens/learning_screen.dart';
+import 'package:canwa/Screens/login_screen.dart';
+import 'package:canwa/Screens/my_course_screen.dart';
+import 'package:canwa/Screens/profile_mentor_screen.dart';
+import 'package:canwa/Screens/profile_screen.dart';
+import 'package:canwa/Screens/recommendation_screen.dart';
+import 'package:canwa/Screens/replay_question_screen.dart';
+import 'package:canwa/Screens/review_screen.dart';
+import 'package:canwa/Screens/search_screen.dart';
+import 'package:canwa/Screens/signup_screen.dart';
+import 'package:canwa/Screens/verification_code_screen.dart';
+import 'package:canwa/Screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pixel_preview/pixel_preview.dart';
 
@@ -79,7 +92,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const PixelPreview(
         presets: ScreenPresets(),
-        child: LanguageScreen(), // Point to the new CourseRemindersScreen
+        child: WishlistScreen(), // Point to the new CourseRemindersScreen
       ),
     );
   }

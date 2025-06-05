@@ -208,7 +208,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Tools',
-                    style: textTheme.headlineSmall?.copyWith(
+                    style: TextStyle(
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
