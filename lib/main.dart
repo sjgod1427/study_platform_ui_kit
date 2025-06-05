@@ -95,7 +95,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const PixelPreview(
         presets: ScreenPresets(),
-        child: FaqScreen(), // Point to the new CourseRemindersScreen
+        child:
+            CreateNewPasswordScreen(), // Point to the new CourseRemindersScreen
       ),
     );
   }
