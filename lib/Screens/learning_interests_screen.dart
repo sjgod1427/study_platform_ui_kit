@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
 class LearningInterestsScreen extends StatefulWidget {
@@ -108,24 +109,11 @@ class _LearningInterestsScreenState extends State<LearningInterestsScreen> {
               ),
             ),
             const Spacer(), // Pushes content to the top and button to the bottom
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _onDonePressed,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-                child: Text(
-                  'Done',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            PrimaryTextButton(
+              text: 'Done',
+              onPressed: () {
+                _onDonePressed();
+              },
             ),
           ],
         ),

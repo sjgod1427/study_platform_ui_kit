@@ -146,59 +146,62 @@ class _FaqScreenState extends State<FaqScreen> {
                         ),
                       ],
                     ),
-                    child: ExpansionTile(
-                      key: PageStorageKey(
-                        'faq_$index',
-                      ), // Important for state persistence
-                      initiallyExpanded: faq['isExpanded'],
-                      onExpansionChanged: (bool expanded) {
-                        setState(() {
-                          faq['isExpanded'] = expanded;
-                        });
-                      },
-                      // Explicitly remove default borders/lines from ExpansionTile itself
-                      shape: const Border.fromBorderSide(
-                        BorderSide.none,
-                      ), // No border when collapsed
-                      collapsedShape: const Border.fromBorderSide(
-                        BorderSide.none,
-                      ), // No border when collapsed
-                      tilePadding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      title: Text(
-                        faq['question'],
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16.0),
+                      child: ExpansionTile(
+                        key: PageStorageKey(
+                          'faq_$index',
+                        ), // Important for state persistence
+                        initiallyExpanded: faq['isExpanded'],
+                        onExpansionChanged: (bool expanded) {
+                          setState(() {
+                            faq['isExpanded'] = expanded;
+                          });
+                        },
+                        // Explicitly remove default borders/lines from ExpansionTile itself
+                        shape: const Border.fromBorderSide(
+                          BorderSide.none,
+                        ), // No border when collapsed
+                        collapsedShape: const Border.fromBorderSide(
+                          BorderSide.none,
+                        ), // No border when collapsed
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
                         ),
-                      ),
-                      trailing: Icon(
-                        faq['isExpanded']
-                            ? Icons.remove_circle
-                            : Icons.add_circle,
-                        color:
-                            primaryColor, // Primary color for the add/remove icon
-                        size: 28, // Adjust size as needed to match screenshot
-                      ),
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            0.0,
-                            16.0,
-                            16.0,
+                        title: Text(
+                          faq['question'],
+                          style: textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                          child: Text(
-                            faq['answer'],
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: Colors.grey[700],
-                              height: 1.5,
+                        ),
+                        trailing: Icon(
+                          faq['isExpanded']
+                              ? Icons.remove_circle
+                              : Icons.add_circle,
+                          color:
+                              primaryColor, // Primary color for the add/remove icon
+                          size: 28, // Adjust size as needed to match screenshot
+                        ),
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              16.0,
+                              0.0,
+                              16.0,
+                              16.0,
+                            ),
+                            child: Text(
+                              faq['answer'],
+                              style: textTheme.bodyLarge?.copyWith(
+                                color: Colors.grey[700],
+                                height: 1.5,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -1,6 +1,7 @@
 import 'package:canwa/Screens/add_new_card_screen.dart';
 import 'package:canwa/Screens/add_question_screen.dart';
 import 'package:canwa/Screens/checkout_screen.dart';
+import 'package:canwa/Screens/add_question_screen.dart';
 import 'package:canwa/Screens/continue_learning_screen.dart';
 import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:canwa/Screens/course_reminders_screen.dart';
