@@ -68,15 +68,16 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
+          iconSize: 18,
         ),
         title: Text(
           'Search',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -104,13 +105,19 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search Something',
-                prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.close, color: Colors.grey[600]),
-                  onPressed: () {
-                    _searchController.clear();
-                    // Perform search clear logic
-                  },
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 8),
+                  child: Icon(Icons.search, color: Colors.grey[600]),
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.close, color: Colors.grey[600]),
+                    onPressed: () {
+                      _searchController.clear();
+                      // Perform search clear logic
+                    },
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -133,6 +140,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Text(
               'Categories',
               style: textTheme.titleLarge?.copyWith(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -195,6 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
         Text(
           title,
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -210,6 +219,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Text(
               'See All',
               style: textTheme.bodyLarge?.copyWith(
+                fontSize: 16,
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
               ),

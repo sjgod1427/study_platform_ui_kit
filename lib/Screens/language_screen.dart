@@ -63,6 +63,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           Colors
               .white, // Screen background should be white/light grey as per image
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
 

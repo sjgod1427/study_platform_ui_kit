@@ -71,6 +71,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
           onPressed: () {
@@ -117,9 +118,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               child: ElevatedButton(
                 onPressed: _onVerifyPressed,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 child: Text(
@@ -160,7 +161,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return SizedBox(
-      width: 60,
+      width: 50,
       height: 60,
       child: TextField(
         controller: _otpControllers[index],

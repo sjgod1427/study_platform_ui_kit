@@ -19,6 +19,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light grey background for the screen
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(

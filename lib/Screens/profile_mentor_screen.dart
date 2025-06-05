@@ -24,15 +24,16 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
+          iconSize: 18,
         ),
         title: Text(
           'Profile Mentor',
-          style: textTheme.titleLarge?.copyWith(
+          style: TextStyle(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -86,6 +87,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     Text(
                       'Janny Andrea',
                       style: textTheme.headlineSmall?.copyWith(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -93,6 +95,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     Text(
                       'UI Designer Expert',
                       style: textTheme.bodyMedium?.copyWith(
+                        fontSize: 15,
                         color: Colors.grey[600],
                       ),
                     ),
@@ -129,6 +132,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
               text: TextSpan(
                 text: _showFullAbout ? _fullAbout : _shortAbout,
                 style: textTheme.bodyLarge?.copyWith(
+                  fontSize: 15,
                   color: Colors.grey[700],
                   height: 1.5,
                 ),
@@ -137,6 +141,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     TextSpan(
                       text: 'Read More',
                       style: textTheme.bodyLarge?.copyWith(
+                        fontSize: 16,
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -152,6 +157,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     TextSpan(
                       text: ' Read Less',
                       style: textTheme.bodyLarge?.copyWith(
+                        fontSize: 16,
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -225,6 +231,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
         Text(
           title,
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -282,6 +289,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
               Text(
                 title,
                 style: textTheme.bodyMedium?.copyWith(
+                  fontSize: 14,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -293,6 +301,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
           Text(
             value,
             style: textTheme.headlineMedium?.copyWith(
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

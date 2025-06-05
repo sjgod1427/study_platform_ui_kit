@@ -8,6 +8,49 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
+  // Sample data for courses
+  final List<Map<String, dynamic>> _recommendationCourses = [
+    {
+      'image': 'https://picsum.photos/id/1015/400/250',
+      'category': 'Science',
+      'title': 'Become a Great Scientist in physics',
+      'author': 'Jerremy Mamika',
+      'price': '\$57',
+      'is_favorite': false,
+    },
+    {
+      'image': 'https://picsum.photos/id/400/400/250',
+      'category': 'Coding',
+      'title': 'Convert to React js for Beginner',
+      'author': 'Joel Tromp',
+      'price': '\$132',
+      'is_favorite': false,
+    },
+    {
+      'image': 'https://picsum.photos/id/600/400/250',
+      'category': 'Graphic Design',
+      'title': 'Expert Wireframing for Mobile Design',
+      'author': 'Jerremy Mamika',
+      'price': '\$48',
+      'is_favorite': false,
+    },
+    {
+      'image': 'https://picsum.photos/id/338/400/250',
+      'category': 'Marketing',
+      'title': 'Digital Marketing Masterclass: From Zero to Hero',
+      'author': 'Sarah Johnson',
+      'price': '\$99',
+      'is_favorite': false,
+    },
+  ];
+
+  void _toggleFavorite(int index) {
+    setState(() {
+      _recommendationCourses[index]['is_favorite'] =
+          !_recommendationCourses[index]['is_favorite'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -21,10 +64,13 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
+          iconSize: 18,
         ),
+        scrolledUnderElevation: 0,
         title: Text(
           'Recommendation',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -49,6 +95,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             course,
             primaryColor,
             textTheme,
+            index, // Pass index to the card builder
           );
         },
       ),
@@ -60,6 +107,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     Map<String, dynamic> course,
     Color primaryColor,
     TextTheme textTheme,
+    int index, // Receive index
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
@@ -99,12 +147,17 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.black,
+                      icon: Icon(
+                        course['is_favorite']
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color:
+                            course['is_favorite'] ? Colors.red : Colors.black,
                         size: 20,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _toggleFavorite(index); // Call the toggle method
+                      },
                       splashRadius: 20,
                     ),
                   ),
@@ -164,36 +217,4 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       ),
     );
   }
-
-  // Sample data for courses
-  final List<Map<String, dynamic>> _recommendationCourses = [
-    {
-      'image': 'https://picsum.photos/id/1015/400/250',
-      'category': 'Science',
-      'title': 'Become a Great Scientist in physics',
-      'author': 'Jerremy Mamika',
-      'price': '\$57',
-    },
-    {
-      'image': 'https://picsum.photos/id/400/400/250',
-      'category': 'Coding',
-      'title': 'Convert to React js for Beginner',
-      'author': 'Joel Tromp',
-      'price': '\$132',
-    },
-    {
-      'image': 'https://picsum.photos/id/600/400/250',
-      'category': 'Graphic Design',
-      'title': 'Expert Wireframing for Mobile Design',
-      'author': 'Jerremy Mamika',
-      'price': '\$48',
-    },
-    {
-      'image': 'https://picsum.photos/id/338/400/250',
-      'category': 'Marketing',
-      'title': 'Digital Marketing Masterclass: From Zero to Hero',
-      'author': 'Sarah Johnson',
-      'price': '\$99',
-    },
-  ];
 }

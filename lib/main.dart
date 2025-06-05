@@ -274,6 +274,12 @@ class MyApp extends StatelessWidget {
                 enabled: true,
                 child: const CheckoutScreen(),
               ),
+              PixelPreview(
+                presets: ScreenPresets(),
+                enabled: true,
+                child: const  WishlistScreen(),
+              ),
+             
             ],
           ),
         ],

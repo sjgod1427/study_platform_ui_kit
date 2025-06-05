@@ -31,15 +31,16 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () {},
+          iconSize: 18,
         ),
         title: Text(
           'Replay Question',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -87,10 +88,10 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
                     primaryColor,
                     textTheme,
                   ),
-                  const Divider(
+                  Divider(
                     height: 32,
-                    thickness: 1,
-                    color: Colors.grey,
+                    thickness: 0.5,
+                    color: Colors.grey.withValues(alpha: 0.5),
                   ), // Separator
                   _buildAnswerItem(
                     context,
@@ -101,10 +102,10 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
                     primaryColor,
                     textTheme,
                   ),
-                  const Divider(
+                  Divider(
                     height: 32,
-                    thickness: 1,
-                    color: Colors.grey,
+                    thickness: 0.5,
+                    color: Colors.grey.withValues(alpha: 0.5),
                   ), // Separator
                   _buildAnswerItem(
                     context,
@@ -276,14 +277,14 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
             ),
             const SizedBox(width: 12),
             Container(
-              width: 50,
-              height: 50,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
                 color: primaryColor,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: const Icon(Icons.send, color: Colors.white),
+                icon: const Icon(Icons.send, color: Colors.white, size: 20),
                 onPressed: _sendMessage,
               ),
             ),

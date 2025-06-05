@@ -136,12 +136,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             left: 0,
             right: 0,
             child: AppBar(
+              scrolledUnderElevation: 0,
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3), // Semi-transparent white
+                  color: Colors.white.withOpacity(
+                    0.3,
+                  ), // Semi-transparent white
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
@@ -153,7 +156,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3), // Semi-transparent white
+                    color: Colors.white.withOpacity(
+                      0.3,
+                    ), // Semi-transparent white
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -554,7 +559,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                 color: primaryColor,
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(Icons.check, color: Colors.white, size: 16),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 16,
+                              ),
                             ),
                           if (isInProgress)
                             SizedBox(
@@ -601,43 +610,54 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             ),
                         ],
                       ),
-                      if (isInProgress && lesson['bullet_points'] != null && lesson['bullet_points'].isNotEmpty)
+                      if (isInProgress &&
+                          lesson['bullet_points'] != null &&
+                          lesson['bullet_points'].isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.only(top: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: lesson['bullet_points']
-                                .asMap()
-                                .entries
-                                .map<Widget>((entry) {
-                              int idx = entry.key;
-                              String point = entry.value;
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 8,
-                                      height: 8,
-                                      margin: const EdgeInsets.only(top: 6, right: 8),
-                                      decoration: BoxDecoration(
-                                        color: idx == 0 ? primaryColor : Colors.grey[400], // Green for first, grey for others
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        point,
-                                        style: textTheme.bodyMedium?.copyWith(
-                                          color: Colors.grey[700],
+                            children:
+                                lesson['bullet_points'].asMap().entries.map<
+                                  Widget
+                                >((entry) {
+                                  int idx = entry.key;
+                                  String point = entry.value;
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 8,
+                                          height: 8,
+                                          margin: const EdgeInsets.only(
+                                            top: 6,
+                                            right: 8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                idx == 0
+                                                    ? primaryColor
+                                                    : Colors
+                                                        .grey[400], // Green for first, grey for others
+                                            shape: BoxShape.circle,
+                                          ),
                                         ),
-                                      ),
+                                        Expanded(
+                                          child: Text(
+                                            point,
+                                            style: textTheme.bodyMedium
+                                                ?.copyWith(
+                                                  color: Colors.grey[700],
+                                                ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
+                                  );
+                                }).toList(),
                           ),
                         ),
                     ],
@@ -650,7 +670,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       ],
     );
   }
-
 
   Widget _buildAchievements(
     BuildContext context,

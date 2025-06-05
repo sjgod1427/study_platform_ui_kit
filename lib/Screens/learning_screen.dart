@@ -33,6 +33,7 @@ class _LearningScreenState extends State<LearningScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
           onPressed: () {
@@ -208,7 +209,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Tools',
-                    style: textTheme.headlineSmall?.copyWith(
+                    style: TextStyle(
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
