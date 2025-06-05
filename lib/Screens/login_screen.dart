@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         automaticallyImplyLeading:
             false, // No back button needed for a login screen
+        scrolledUnderElevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Row(

@@ -59,6 +59,7 @@ class _CourseRemindersScreenState extends State<CourseRemindersScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light grey background as per image
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent, // Transparent to match image
         elevation: 0,
         leading: Container(
@@ -176,9 +177,10 @@ class _CourseRemindersScreenState extends State<CourseRemindersScreen> {
                         Text(
                           dayData['dayName']!,
                           style: textTheme.bodySmall?.copyWith(
-                            color: isSelected
-                                ? Colors.white.withOpacity(0.8)
-                                : Colors.grey[600],
+                            color:
+                                isSelected
+                                    ? Colors.white.withOpacity(0.8)
+                                    : Colors.grey[600],
                           ),
                         ),
                       ],
@@ -260,7 +262,9 @@ class _CourseRemindersScreenState extends State<CourseRemindersScreen> {
                     height: 50, // Height of the green vertical line
                     decoration: BoxDecoration(
                       color: primaryColor,
-                      borderRadius: BorderRadius.circular(2), // Rounded caps for the line
+                      borderRadius: BorderRadius.circular(
+                        2,
+                      ), // Rounded caps for the line
                     ),
                     margin: const EdgeInsets.only(right: 12.0),
                   ),

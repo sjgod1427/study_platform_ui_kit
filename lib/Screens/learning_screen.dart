@@ -33,6 +33,7 @@ class _LearningScreenState extends State<LearningScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
           onPressed: () {

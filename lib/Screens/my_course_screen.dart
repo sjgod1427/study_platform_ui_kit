@@ -95,6 +95,7 @@ class _MyCourseScreenState extends State<MyCourseScreen> {
             Navigator.of(context).pop();
           },
         ),
+        scrolledUnderElevation: 0,
         title: Text(
           'My Course',
           style: TextStyle(

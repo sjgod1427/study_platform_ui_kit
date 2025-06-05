@@ -66,6 +66,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           },
           iconSize: 18,
         ),
+        scrolledUnderElevation: 0,
         title: Text(
           'Recommendation',
           style: textTheme.titleLarge?.copyWith(

@@ -71,6 +71,7 @@ class _LearningInterestsScreenState extends State<LearningInterestsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false, // No back button
       ),
       body: Padding(

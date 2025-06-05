@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
       appBar: AppBar(
         automaticallyImplyLeading:
             false, // No back button needed for a signup screen
+        scrolledUnderElevation: 0,
         title: Row(
           children: [
             Icon(
