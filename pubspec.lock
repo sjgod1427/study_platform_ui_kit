@@ -270,10 +270,9 @@ packages:
   pixel_preview:
     dependency: "direct main"
     description:
-      name: pixel_preview
-      sha256: "9393b675c23e9cd5eb38e83d5422d335c58256295e585c20752ace77d700d505"
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/samyakjain/Documents/beam/pixel_preview"
+      relative: false
+    source: path
     version: "0.0.4"
   platform:
     dependency: transitive
