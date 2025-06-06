@@ -49,14 +49,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color:
-                Colors
-                    .grey[100], // Light grey background as seen in some app bars
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -65,6 +64,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: Text(
           'Edit Profile',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

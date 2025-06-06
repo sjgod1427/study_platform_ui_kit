@@ -92,8 +92,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 18,
+              color: primaryColor,
+              size: 20,
             ), // Black icon
             onPressed: () {},
           ),

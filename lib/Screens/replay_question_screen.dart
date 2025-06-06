@@ -33,7 +33,7 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {},
           iconSize: 18,
         ),

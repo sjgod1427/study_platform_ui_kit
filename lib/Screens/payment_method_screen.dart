@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Screens/add_new_card_screen.dart'; // Import the new screen
 
@@ -56,34 +57,23 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     );
   }
 
-  void _confirmSelection() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Payment method confirmed (logic not implemented).'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-    // Potentially navigate back or to the next step in checkout
-  }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
+    final primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color:
-                Colors
-                    .grey[100], // Light grey background as seen in notification screen
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -92,6 +82,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         title: Text(
           'Payment Method',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -100,13 +91,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         actions: [
           Container(
             margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey[100], // Light grey background
-              shape: BoxShape.circle,
-            ),
+
             child: IconButton(
-              icon: Icon(Icons.add, color: Colors.black), // Plus icon
+              icon: Icon(Icons.add, color: primaryColor, size: 20), // Plus icon
               onPressed: _addPaymentMethod,
+              iconSize: 20,
             ),
           ),
         ],
@@ -142,28 +131,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             ),
           ),
           // Confirmation Button at the bottom
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _confirmSelection,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                child: Text(
-                  'Confirmation',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          PrimaryTextButton(text: 'Confirmation'),
         ],
       ),
     );

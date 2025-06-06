@@ -35,7 +35,7 @@ class _LearningScreenState extends State<LearningScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -43,6 +43,7 @@ class _LearningScreenState extends State<LearningScreen> {
         title: Text(
           'Learning',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

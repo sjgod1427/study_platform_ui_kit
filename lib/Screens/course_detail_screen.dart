@@ -105,11 +105,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -142,8 +142,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               leading: Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(
-                    0.3,
+                  color: Colors.white.withValues(
+                    alpha: 0.3,
                   ), // Semi-transparent white
                   shape: BoxShape.circle,
                 ),
@@ -156,8 +156,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(
-                      0.3,
+                    color: Colors.white.withValues(
+                      alpha: 0.3,
                     ), // Semi-transparent white
                     shape: BoxShape.circle,
                   ),
@@ -496,7 +496,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.grey.withValues(alpha: 0.1),
                         spreadRadius: 1,
                         blurRadius: 5,
                         offset: const Offset(0, 3),
@@ -730,7 +730,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               border: Border.all(
                 color:
                     achievement['achieved'] as bool
-                        ? primaryColor.withOpacity(0.3)
+                        ? primaryColor.withValues(alpha: 0.3)
                         : Colors.grey[300]!,
               ),
             ),
@@ -867,7 +867,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.05),
+            color: Colors.grey.withValues(alpha: 0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -956,11 +956,47 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
                       '50\nPoints',
                       courseProgress.isMilestoneAchieved(0.50),
                     ),
-                    _buildProgressPoint(
-                      constraints.maxWidth,
-                      0.75,
-                      '75\nPoints',
-                      courseProgress.isMilestoneAchieved(0.75),
+                    Positioned(
+                      left: 112.0,
+                      top: 12,
+                      child: SizedBox(
+                        width: 195.0,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 600),
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.grey[400]!,
+                                  width: 2.5,
+                                ),
+                                boxShadow: null,
+                              ),
+                              child: const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              '75\nPints',
+                              textAlign: TextAlign.center,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                height: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     _buildProgressPoint(
                       constraints.maxWidth,
@@ -980,10 +1016,10 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: primaryColor.withOpacity(0.05),
+              color: primaryColor.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -1017,12 +1053,11 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
     const double pointAreaWidth = 60.0;
     const double circleDiameter = 20.0;
 
-    final double leftPosition =
-        (positionFactor * maxWidth) - (pointAreaWidth / 2);
-    final double clampedLeft = leftPosition.clamp(
-      0.0,
-      maxWidth - pointAreaWidth,
-    );
+    // Calculate the ideal centered position
+    final double idealLeft = (positionFactor * maxWidth) - (pointAreaWidth / 2);
+
+    // Clamp so the box does not overflow the edges
+    final double clampedLeft = idealLeft.clamp(0.0, maxWidth - pointAreaWidth);
 
     return Positioned(
       left: clampedLeft,
@@ -1047,7 +1082,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
                     isAchieved
                         ? [
                           BoxShadow(
-                            color: primaryColor.withOpacity(0.3),
+                            color: primaryColor.withValues(alpha: 0.3),
                             spreadRadius: 1,
                             blurRadius: 3,
                             offset: const Offset(0, 1),

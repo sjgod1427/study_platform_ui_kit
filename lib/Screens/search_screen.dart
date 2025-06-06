@@ -73,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
           onPressed: () {},
-          iconSize: 18,
+          iconSize: 20,
         ),
         title: Text(
           'Search',

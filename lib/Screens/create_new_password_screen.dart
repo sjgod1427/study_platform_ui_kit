@@ -39,26 +39,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
     });
   }
 
-  void _onCreatePasswordPressed() {
-    if (_passwordsMatch) {
-      // Implement password creation logic here
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password updated successfully!'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      // Optionally navigate to login or home screen
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Passwords do not match or are empty.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -69,7 +49,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -77,6 +57,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
         title: Text(
           'Create New Password',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -26,12 +27,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         duration: const Duration(seconds: 2),
       ),
     );
-  }
-
-  void _checkoutCourse() {
-    // For demonstration, immediately show the success dialog.
-    // In a real app, this would be triggered after actual payment processing.
-    _showPaymentSuccessDialog(context);
   }
 
   void _changePaymentMethod() {
@@ -179,12 +174,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.grey[100], // Light grey background as seen in image
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -193,6 +189,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         title: Text(
           'Checkout',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -268,25 +265,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
             const Spacer(), // Pushes the button to the bottom
             // Checkout Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _checkoutCourse,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                child: Text(
-                  'Checkout Course',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            PrimaryTextButton(text: "Checkout Course"),
           ],
         ),
       ),

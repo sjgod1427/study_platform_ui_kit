@@ -19,17 +19,6 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
     super.dispose();
   }
 
-  void _sendQuestion() {
-    // Implement sending question logic here
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Question sent successfully!'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-    Navigator.pop(context); // Go back after sending
-  }
-
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -40,7 +29,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -48,6 +37,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
         title: Text(
           'Add Question',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

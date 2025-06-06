@@ -104,10 +104,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: primaryColor,
           ), // Black icon, transparent background
           onPressed: () {},
-          iconSize: 18,
+          iconSize: 20,
         ),
         title: Text(
           'My Wishlist',
@@ -122,7 +122,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
           IconButton(
             icon: Icon(
               Icons.more_vert,
-              color: Colors.black,
+              color: primaryColor,
+              size: 20,
             ), // Black icon, transparent background
             onPressed: () {},
           ),
@@ -279,132 +280,138 @@ class _WishlistScreenState extends State<WishlistScreen> {
     TextTheme textTheme,
     int index,
   ) {
-    return Container(
-      height: 120,
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(16.0),
+      child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias, // Ensures children respect borderRadius
-      child: Row(
-        children: [
-          // Left Image
-          SizedBox(
-            width: 120,
-            height: double.infinity,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                bottomLeft: Radius.circular(16.0),
+        onTap: () {},
+        hoverColor: primaryColor.withValues(
+          alpha: 0.05,
+        ), // subtle hover on web/desktop
+        splashColor: primaryColor.withValues(
+          alpha: 0.2,
+        ), // splash effect on tap
+        child: Container(
+          height: 120,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
+          clipBehavior: Clip.antiAlias,
+          child: Row(
+            children: [
+              // Left Image
+              SizedBox(
+                width: 120,
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    bottomLeft: Radius.circular(16.0),
+                  ),
+                  child: Image.network(course['image']!, fit: BoxFit.cover),
+                ),
               ),
-              child: Image.network(course['image']!, fit: BoxFit.cover),
-            ),
-          ),
-          // Right Text Area
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Category + Heart Icon
-                  Row(
+              // Right Text Area
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 8,
+                  ),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Text(
-                          course['category']!,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
+                      // Category + Heart Icon
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              course['category']!,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _wishlistCourses[index]['isFavorited'] =
-                                !_wishlistCourses[index]['isFavorited'];
-                          });
-                        },
-                        child: Icon(
-                          _wishlistCourses[index]['isFavorited']
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color:
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _wishlistCourses[index]['isFavorited'] =
+                                    !_wishlistCourses[index]['isFavorited'];
+                              });
+                            },
+                            child: Icon(
                               _wishlistCourses[index]['isFavorited']
-                                  ? Colors.red
-                                  : Colors.grey[600],
-                          size: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Title
-                  Text(
-                    course['title']!,
-                    style: textTheme.titleMedium?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  // Rating and Reviews
-                  Row(
-                    children: [
-                      const Icon(Icons.star, color: Colors.amber, size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${course['rating']} • (${course['reviews']})',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Author and Price
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          course['author']!,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: Colors.grey[600],
-                            fontSize: 12,
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color:
+                                  _wishlistCourses[index]['isFavorited']
+                                      ? Colors.red
+                                      : Colors.grey[600],
+                              size: 18,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        ],
                       ),
+                      // Title
                       Text(
-                        course['price']!,
+                        course['title']!,
                         style: textTheme.titleMedium?.copyWith(
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
-                          fontSize: 14,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      // Rating and Reviews
+                      Row(
+                        children: [
+                          const Icon(Icons.star, color: Colors.amber, size: 16),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${course['rating']} • (${course['reviews']})',
+                            style: textTheme.bodySmall?.copyWith(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Author and Price
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              course['author']!,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            course['price']!,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

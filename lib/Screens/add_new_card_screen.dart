@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
 class AddNewCardScreen extends StatefulWidget {
@@ -67,34 +68,23 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
     });
   }
 
-  void _addCard() {
-    // Implement card addition logic here
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Card added successfully (logic not implemented).'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-    // Optionally navigate back or to another screen
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
+    final primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.grey[100], // Light grey background
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -103,6 +93,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
         title: Text(
           'Add New Card',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -268,25 +259,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
 
             const Spacer(), // Pushes the button to the bottom
             // Add Card Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _addCard,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                child: Text(
-                  'Add Card',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            PrimaryTextButton(text: "Add Card"),
           ],
         ),
       ),

@@ -64,7 +64,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          iconSize: 18,
+          iconSize: 20,
         ),
         scrolledUnderElevation: 0,
         title: Text(

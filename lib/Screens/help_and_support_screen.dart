@@ -15,19 +15,20 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
+    final primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light grey background for the screen
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.grey[100], // Light grey background for back button
-            shape: BoxShape.circle,
-          ),
+
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -36,6 +37,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
         title: Text(
           'Help & Support',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

@@ -78,7 +78,8 @@ class MyApp extends StatelessWidget {
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor:
-                Colors.black, // Changed to black for social buttons as per image
+                Colors
+                    .black, // Changed to black for social buttons as per image
             side: BorderSide(color: Colors.grey[300]!), // Light grey border
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
@@ -144,7 +145,6 @@ class MyApp extends StatelessWidget {
           PixelGroup(
             title: 'Core App Screens',
             children: [
-              
               PixelPreview(
                 presets: ScreenPresets(),
                 enabled: true,
@@ -278,9 +278,8 @@ class MyApp extends StatelessWidget {
               PixelPreview(
                 presets: ScreenPresets(),
                 enabled: true,
-                child: const  WishlistScreen(),
+                child: const WishlistScreen(),
               ),
-             
             ],
           ),
         ],

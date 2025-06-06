@@ -68,7 +68,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
           margin: const EdgeInsets.all(8),
 
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black), // Black icon
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: primaryColor,
+              size: 20,
+            ), // Black icon
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -77,6 +81,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         title: Text(
           'Language',
           style: textTheme.titleLarge?.copyWith(
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

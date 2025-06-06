@@ -30,7 +30,7 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+          icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
           onPressed: () {
             Navigator.of(context).pop();
           },
