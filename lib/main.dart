@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:pixel_preview/pixel_app/pixel_group.dart';
 import 'package:pixel_preview/pixel_preview.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pixel_preview/pixel_thumbnail/pixel_thumbnail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -99,191 +100,224 @@ class MyApp extends StatelessWidget {
         textTheme:
             GoogleFonts.plusJakartaSansTextTheme(), // Apply user's text theme
       ),
-      home: PixelApp(
-        iFrameMode: true,
-        groups: [
-          PixelGroup(
-            title: 'Onboarding & Authentication',
-            children: [
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const OnboardingScreen(),
+      home:
+          true
+              ? PixelThumbnail(
+                screens: [
+                  PixelPreview(
+                    presets: ScreenPresets(),
+                    enabled: true,
+                    child: const HomeScreen2(),
+                  ),
+
+                  PixelPreview(
+                    presets: ScreenPresets(),
+                    enabled: true,
+                    child: const ProfileMentorScreen(),
+                  ),
+                  PixelPreview(
+                    presets: ScreenPresets(),
+                    enabled: true,
+                    child: const CourseDetailScreen(),
+                  ),
+
+                  PixelPreview(
+                    presets: ScreenPresets(),
+                    enabled: true,
+                    child: const LearningScreen(),
+                  ),
+                  PixelPreview(
+                    presets: ScreenPresets(),
+                    enabled: true,
+                    child: const CourseRemindersScreen(),
+                  ),
+                ],
+              )
+              : PixelApp(
+                iFrameMode: true,
+                groups: [
+                  PixelGroup(
+                    title: 'Onboarding & Authentication',
+                    children: [
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const OnboardingScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const LoginScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const SignupScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ForgotPasswordScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const VerificationCodeScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const CreateNewPasswordScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const LearningInterestsScreen(),
+                      ),
+                    ],
+                  ),
+                  PixelGroup(
+                    title: 'Core App Screens',
+                    children: [
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const HomeScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const HomeScreen2(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const SearchScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const MyCourseScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const WishlistScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ProfileScreen(),
+                      ),
+                    ],
+                  ),
+                  PixelGroup(
+                    title: 'Course & Learning',
+                    children: [
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const CourseDetailScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const LearningScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ContinueLearningScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const CourseRemindersScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const AddQuestionScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ReplayQuestionScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ReviewScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const RecommendationScreen(),
+                      ),
+                    ],
+                  ),
+                  PixelGroup(
+                    title: 'Profile & Settings',
+                    children: [
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const EditProfileScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const ProfileMentorScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const LanguageScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const NotificationScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const FaqScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const HelpAndSupportScreen(),
+                      ),
+                    ],
+                  ),
+                  PixelGroup(
+                    title: 'Payment & Checkout',
+                    children: [
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const PaymentMethodScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const AddNewCardScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const CheckoutScreen(),
+                      ),
+                      PixelPreview(
+                        presets: ScreenPresets(),
+                        enabled: true,
+                        child: const WishlistScreen(),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const LoginScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const SignupScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ForgotPasswordScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const VerificationCodeScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const CreateNewPasswordScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const LearningInterestsScreen(),
-              ),
-            ],
-          ),
-          PixelGroup(
-            title: 'Core App Screens',
-            children: [
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const HomeScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const HomeScreen2(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const SearchScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const MyCourseScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const WishlistScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ProfileScreen(),
-              ),
-            ],
-          ),
-          PixelGroup(
-            title: 'Course & Learning',
-            children: [
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const CourseDetailScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const LearningScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ContinueLearningScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const CourseRemindersScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const AddQuestionScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ReplayQuestionScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ReviewScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const RecommendationScreen(),
-              ),
-            ],
-          ),
-          PixelGroup(
-            title: 'Profile & Settings',
-            children: [
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const EditProfileScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const ProfileMentorScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const LanguageScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const NotificationScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const FaqScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const HelpAndSupportScreen(),
-              ),
-            ],
-          ),
-          PixelGroup(
-            title: 'Payment & Checkout',
-            children: [
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const PaymentMethodScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const AddNewCardScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const CheckoutScreen(),
-              ),
-              PixelPreview(
-                presets: ScreenPresets(),
-                enabled: true,
-                child: const WishlistScreen(),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
