@@ -849,177 +849,199 @@ class _MyCourseScreenState extends State<MyCourseScreen> {
     Color primaryColor,
     TextTheme textTheme,
   ) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(
-          width: 0.5,
-          color: Colors.grey.withValues(alpha: 0.5),
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  course['image']!,
-                  height: 64,
-                  width: 64,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      course['title']!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      course['author']!,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.people_alt,
-                          color: Colors.grey[600],
-                          size: 18,
-                        ),
-                        const SizedBox(width: 4),
-                        // Wrap with Flexible or Expanded to prevent overflow
-                        Flexible(
-                          child: Text(
-                            '${course['members']} Members',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Icon(
-                          Icons.play_circle_outline,
-                          color: Colors.grey[600],
-                          size: 18,
-                        ),
-                        const SizedBox(width: 4),
-                        // Wrap with Flexible or Expanded to prevent overflow
-                        Flexible(
-                          child: Text(
-                            '${course['num_courses']} Courses',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    if (course['status'] == 'not_started')
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Text(
-                            'Start Course',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )
-                    else if (course['status'] == 'completed')
-                      Row(
-                        children: [
-                          Text(
-                            'Complete',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          // Explicitly constrain width if overflow still occurs, or ensure enough space
-                          Text(
-                            '${(course['progress'] * 100).toInt()}%',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            // Removed softWrap: false and overflow: TextOverflow.visible, let Expanded handle it
-                          ),
-                        ],
-                      ),
-                    if (course['status'] == 'in_progress')
-                      Row(
-                        children: [
-                          Text(
-                            'Course is in progress',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            '${(course['progress'] * 100).toInt()}%',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                            // Removed softWrap: false and overflow: TextOverflow.visible
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
-              ),
-            ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16.0),
+      child: Material(
+        color: Colors.transparent,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.0),
+            border: Border.all(
+              width: 0.5,
+              color: Colors.grey.withValues(alpha: 0.5),
+            ),
           ),
-          // Progress Indicator (replacing the slider)
-          if (course['status'] == 'in_progress' ||
-              course['status'] == 'completed')
-            Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: LinearProgressIndicator(
-                value: course['progress'],
-                backgroundColor: Colors.grey[200],
-                valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                minHeight: 6.0,
-                borderRadius: BorderRadius.circular(3.0),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16.0),
+            onTap: () {
+              // Handle card tap
+              print('Course tapped: ${course['title']}');
+              // Add your navigation or action logic here
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          course['image']!,
+                          height: 64,
+                          width: 64,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course['title']!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              course['author']!,
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.people_alt,
+                                  color: Colors.grey[600],
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 4),
+                                // Wrap with Flexible or Expanded to prevent overflow
+                                Flexible(
+                                  child: Text(
+                                    '${course['members']} Members',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey[600],
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Icon(
+                                  Icons.play_circle_outline,
+                                  color: Colors.grey[600],
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 4),
+                                // Wrap with Flexible or Expanded to prevent overflow
+                                Flexible(
+                                  child: Text(
+                                    '${course['num_courses']} Courses',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey[600],
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            if (course['status'] == 'not_started')
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Handle start course button tap
+                                    print(
+                                      'Start course tapped: ${course['title']}',
+                                    );
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: Text(
+                                    'Start Course',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else if (course['status'] == 'completed')
+                              Row(
+                                children: [
+                                  Text(
+                                    'Complete',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  // Explicitly constrain width if overflow still occurs, or ensure enough space
+                                  Text(
+                                    '${(course['progress'] * 100).toInt()}%',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    // Removed softWrap: false and overflow: TextOverflow.visible, let Expanded handle it
+                                  ),
+                                ],
+                              ),
+                            if (course['status'] == 'in_progress')
+                              Row(
+                                children: [
+                                  Text(
+                                    'Course is in progress',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    '${(course['progress'] * 100).toInt()}%',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey[600],
+                                    ),
+                                    // Removed softWrap: false and overflow: TextOverflow.visible
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Progress Indicator (replacing the slider)
+                  if (course['status'] == 'in_progress' ||
+                      course['status'] == 'completed')
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: LinearProgressIndicator(
+                        value: course['progress'],
+                        backgroundColor: Colors.grey[200],
+                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+                        minHeight: 6.0,
+                        borderRadius: BorderRadius.circular(3.0),
+                      ),
+                    ),
+                ],
               ),
             ),
-        ],
+          ),
+        ),
       ),
     );
   }

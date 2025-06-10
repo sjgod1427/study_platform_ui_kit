@@ -2,7 +2,6 @@ import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:canwa/Widgets/social_auth_button.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // For social icons
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,8 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isPasswordVisible = false;
-
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -66,25 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 24),
-            Text(
-              'Email',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+
+            AuthTextfields().buildTextField(
+              labelText: "Email",
+              controller: TextEditingController(),
             ),
-            const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.email),
             const SizedBox(height: 20),
-            Text(
-              'Password',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+
+            AuthTextfields().buildPasswordField(
+              controller: TextEditingController(),
             ),
-            const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 16),
             Align(
               alignment: Alignment.centerRight,

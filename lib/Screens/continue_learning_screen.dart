@@ -152,88 +152,122 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: primaryColor.withValues(alpha: 0.02),
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(width: 1, color: Colors.grey.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                course['image']!,
-                height: 70,
-                width: 70,
-                fit: BoxFit.cover,
+        child: Material(
+          color: Colors.transparent,
+          child: Ink(
+            decoration: BoxDecoration(
+              color: primaryColor.withValues(alpha: 0.02),
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(
+                width: 1,
+                color: Colors.grey.withValues(alpha: 0.2),
               ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16.0),
+              onTap: () {
+                // Handle card tap
+                print('Course progress card tapped: ${course['title']}');
+                // Add your navigation or action logic here
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      course['title']!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          course['image']!,
+                          height: 70,
+                          width: 70,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      course['author']!,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    LinearProgressIndicator(
-                      value: course['progress'],
-                      backgroundColor: Colors.grey[200],
-                      valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                      minHeight: 6,
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${(course['progress'] * 100).toInt()}% completed',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                course['title']!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.black,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                course['author']!,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: Colors.grey[600],
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 8),
+                              LinearProgressIndicator(
+                                value: course['progress'],
+                                backgroundColor: Colors.grey[200],
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  primaryColor,
+                                ),
+                                minHeight: 6,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${(course['progress'] * 100).toInt()}% completed',
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                hoverColor: Colors.black.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(16),
+                                onTap: () {
+                                  // Handle more options tap
+                                  print(
+                                    'More options tapped for: ${course['title']}',
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Icon(
+                                    Icons.more_vert,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      hoverColor: Colors.black.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () {},
-                      child: Icon(Icons.more_vert, color: Colors.grey[600]),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

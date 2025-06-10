@@ -119,27 +119,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             const SizedBox(height: 32),
 
             // Full Name Input
-            Text(
-              'Full Name',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+            AuthTextfields().buildTextField(
+              labelText: "Full Name",
+              controller: TextEditingController(),
             ),
-            const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.fullName),
             const SizedBox(height: 20),
 
-            // Email Input (Read-only)
-            Text(
-              'Email',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+            AuthTextfields().buildTextField(
+              labelText: "Email",
+              controller: TextEditingController(),
             ),
-            const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.email),
 
             const Spacer(), // Pushes the button to the bottom
             // Save Button

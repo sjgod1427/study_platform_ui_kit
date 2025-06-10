@@ -126,15 +126,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               style: textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
             ),
             const SizedBox(height: 24),
-            Text(
-              'Email',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+
+            AuthTextfields().buildTextField(
+              labelText: "Email",
+              controller: TextEditingController(),
             ),
-            const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 40),
             PrimaryTextButton(text: "Send Email"),
           ],

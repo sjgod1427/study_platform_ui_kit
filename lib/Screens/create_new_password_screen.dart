@@ -14,8 +14,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  bool _isNewPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
+
   bool _passwordsMatch = false;
 
   @override
@@ -83,7 +82,9 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            BasicTextField(type: BasicTextFieldType.password),
+            AuthTextfields().buildPasswordField(
+              controller: TextEditingController(),
+            ),
             const SizedBox(height: 20),
             Text(
               'Confirm New Password',
@@ -93,9 +94,8 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            BasicTextField(
-              type: BasicTextFieldType.password,
-              hintText: 'Enter new password',
+            AuthTextfields().buildPasswordField(
+              controller: TextEditingController(),
             ),
             const SizedBox(height: 12),
             if (_newPasswordController.text.isNotEmpty &&

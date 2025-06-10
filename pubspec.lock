@@ -270,9 +270,11 @@ packages:
   pixel_preview:
     dependency: "direct main"
     description:
-      path: "/Users/samyakjain/Documents/beam/pixel_preview"
-      relative: false
-    source: path
+      path: "."
+      ref: pixel-app
+      resolved-ref: "37ca220d411a70754dc3d0711d42e042c9088af2"
+      url: "https://github.com/samyakkkk/pixel_preview.git"
+    source: git
     version: "0.0.4"
   platform:
     dependency: transitive

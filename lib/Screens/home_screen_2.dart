@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen2 extends StatefulWidget {
@@ -24,80 +25,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        toolbarHeight: 80, // Adjust height as needed
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Row(
-            children: [
-              const CircleAvatar(
-                radius: 24,
-                backgroundImage: NetworkImage(
-                  'https://picsum.photos/id/237/200/200', // Placeholder profile image
-                ),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Welcome Back,',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  Text(
-                    'Josse Makima',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.black),
-                onPressed: () {
-                  // Handle search
-                },
-              ),
-              Stack(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications_none,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      // Handle notifications
-                    },
-                  ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: const BoxDecoration(
-                        color: Colors.red, // Notification indicator color
-                        shape: BoxShape.circle,
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
@@ -382,6 +310,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
         'price': '\$499',
         'oldPrice': '\$699',
         'tag': 'New Course',
+        'isFavorite': false, // Added favorite state
       },
       {
         'category': 'Language',
@@ -393,6 +322,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
         'price': '\$399',
         'oldPrice': '\$499',
         'tag': null,
+        'isFavorite': false,
       },
       {
         'category': 'Programming',
@@ -403,6 +333,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
         'price': '\$599',
         'oldPrice': '\$799',
         'tag': 'Best Seller',
+        'isFavorite': false,
       },
     ];
 
@@ -429,128 +360,164 @@ class _HomeScreen2State extends State<HomeScreen2> {
                 ),
               ],
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16.0),
-                  ),
-                  child: Stack(
-                    children: [
-                      Image.network(
-                        course['image']!,
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16.0),
+                onTap: () {
+                  // Handle course card tap
+                  print('Popular course tapped: ${course['title']}');
+                  // You can navigate to course detail page here
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailPage(course: course)));
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(16.0),
                       ),
-                      Positioned(
-                        top: 12,
-                        right: 12,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.8),
-                            shape: BoxShape.circle,
+                      child: Stack(
+                        children: [
+                          Image.network(
+                            course['image']!,
+                            height: 120,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
                           ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.favorite_border,
-                              color: Colors.black,
-                              size: 20,
+                          Positioned(
+                            top: 12,
+                            right: 12,
+                            child: StatefulBuilder(
+                              builder: (context, setState) {
+                                return Material(
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                  shape: const CircleBorder(),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () {
+                                      setState(() {
+                                        course['isFavorite'] =
+                                            !course['isFavorite'];
+                                      });
+                                      // You can also call a callback here to update parent state
+                                      print(
+                                        'Favorite toggled for: ${course['title']}',
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        course['isFavorite']
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color:
+                                            course['isFavorite']
+                                                ? Colors.red
+                                                : Colors.black,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                            onPressed: () {},
-                            splashRadius: 20, // Reduce splash radius
                           ),
-                        ),
-                      ),
-                      if (course['tag'] != null)
-                        Positioned(
-                          top: 12,
-                          left: 12,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.7),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              course['tag']!,
-                              style: textTheme.bodySmall?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                          if (course['tag'] != null)
+                            Positioned(
+                              top: 12,
+                              left: 12,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.7),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  course['tag']!,
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        course['category']!, // Added category text
-                        style: textTheme.bodySmall?.copyWith(
-                          color: primaryColor, // Category text in primary color
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        course['title']!,
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${course['rating']} (${course['reviews']} reviews)',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                          ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            course['price']!,
+                            course['category']!, // Added category text
+                            style: textTheme.bodySmall?.copyWith(
+                              color:
+                                  primaryColor, // Category text in primary color
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            course['title']!,
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: primaryColor,
+                              color: Colors.black,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            course['oldPrice']!,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[500],
-                              decoration: TextDecoration.lineThrough,
-                            ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${course['rating']} (${course['reviews']} reviews)',
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                course['price']!,
+                                style: textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                course['oldPrice']!,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: Colors.grey[500],
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },

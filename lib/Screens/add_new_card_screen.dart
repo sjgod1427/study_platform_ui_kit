@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -111,67 +112,17 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
               height: 32,
             ), // Increased spacing for visual separation
             // Card Number Input
-            Text(
-              'Card Number',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _cardNumberController,
-              keyboardType: TextInputType.number,
-              maxLength: 19, // Max length for "XXXX - XXXX - XXXX - XXXX"
-              decoration: InputDecoration(
-                hintText: 'Enter Card Number',
-                hintStyle: textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-                counterText: '', // Hide default counter
-              ),
+            AuthTextfields().buildTextField(
+              controller: TextEditingController(),
+              labelText: "Enter Card Number",
             ),
             const SizedBox(height: 20),
 
             // Card Holder Name Input
-            Text(
-              'Card Holder Name',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _cardHolderNameController,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                hintText: 'Enter Holder Name',
-                hintStyle: textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
+            AuthTextfields().buildTextField(
+              controller: TextEditingController(),
+              labelText: "Enter Holder Name",
             ),
             const SizedBox(height: 20),
 
@@ -182,35 +133,9 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Expired',
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: _expiredController,
-                        keyboardType: TextInputType.datetime,
-                        maxLength: 5, // MM/YY
-                        decoration: InputDecoration(
-                          hintText: 'MM/YY',
-                          hintStyle: textTheme.bodyLarge?.copyWith(
-                            color: Colors.grey[600],
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey[100],
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16.0,
-                            horizontal: 16.0,
-                          ),
-                          counterText: '', // Hide default counter
-                        ),
+                      AuthTextfields().buildTextField(
+                        controller: TextEditingController(),
+                        labelText: "MM/YY",
                       ),
                     ],
                   ),
@@ -220,36 +145,9 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'CVV Code',
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: _cvvCodeController,
-                        keyboardType: TextInputType.number,
-                        maxLength: 3, // Standard CVV length
-                        obscureText: true, // Typically obscured
-                        decoration: InputDecoration(
-                          hintText: 'CVV',
-                          hintStyle: textTheme.bodyLarge?.copyWith(
-                            color: Colors.grey[600],
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey[100],
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16.0,
-                            horizontal: 16.0,
-                          ),
-                          counterText: '', // Hide default counter
-                        ),
+                      AuthTextfields().buildTextField(
+                        controller: TextEditingController(),
+                        labelText: "CVV",
                       ),
                     ],
                   ),

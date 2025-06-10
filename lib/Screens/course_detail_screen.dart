@@ -30,7 +30,6 @@ class CourseDetailScreen extends StatefulWidget {
 
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
   int _selectedContentIndex = 0;
-  bool _isPlaying = false;
 
   // Course progress state
   late CourseProgress _courseProgress;
@@ -76,301 +75,325 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     }
   }
 
+  // Add these variables to your State class
+  double scrollOffset = 0.0;
+  String totalTime = "15:30";
+  int currentVideoIndex = 0;
+  int totalVideos = 5;
+  int selectedContentIndex = 0; // This might already exist in your code
+
   @override
   Widget build(BuildContext context) {
-    String _currentTime = "00:00";
-    String _totalTime = "15:30";
-    double _videoProgress = 0.3;
-    int _currentVideoIndex = 0;
-    int _totalVideos = 5;
     final primaryColor = Theme.of(context).primaryColor;
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      body: CustomScrollView(
-        slivers: [
-          // App Bar with Background Image
-          SliverAppBar(
-            scrolledUnderElevation: 0,
-            expandedHeight: MediaQuery.of(context).size.height * 0.35,
-            floating: false,
-            pinned: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: Container(
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.3),
-                shape: BoxShape.circle,
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          if (scrollNotification is ScrollUpdateNotification) {
+            setState(() {
+              scrollOffset = scrollNotification.metrics.pixels;
+            });
+          }
+          return false;
+        },
+        child: CustomScrollView(
+          slivers: [
+            // App Bar with Background Image
+            SliverAppBar(
+              scrolledUnderElevation: 0,
+              expandedHeight: MediaQuery.of(context).size.height * 0.35,
+              floating: false,
+              pinned: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  size: 20,
+                  color: Colors.white,
+                ),
               ),
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
+              actions: _buildActionWidgets(),
+              flexibleSpace: FlexibleSpaceBar(
+                background: _buildFlexibleSpaceBackground(
+                  primaryColor,
+                  textTheme,
+                ),
               ),
             ),
-            actions: [
-              Container(
-                margin: const EdgeInsets.all(8),
+
+            // Content Section
+            SliverToBoxAdapter(
+              child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.3),
-                  shape: BoxShape.circle,
+                  color: Colors.grey[50],
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(30.0),
+                  ),
                 ),
-                child: IconButton(
-                  icon: const Icon(Icons.more_horiz, color: Colors.white),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CourseRemindersScreen(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 32),
+
+                    // Course Info Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'English Beginner Level',
+                            style: textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Learn essential English skills, including grammar, vocabulary, and practical conversation basics.',
+                            style: textTheme.bodyLarge?.copyWith(
+                              color: Colors.grey[700],
+                              height: 1.6,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Custom Tab Chips
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Row(
+                        children: [
+                          _CourseDetailChip(
+                            label: 'Overview',
+                            isSelected: _selectedContentIndex == 0,
+                            onTap:
+                                () => setState(() => _selectedContentIndex = 0),
+                          ),
+                          const SizedBox(width: 12),
+                          _CourseDetailChip(
+                            label: 'Course',
+                            isSelected: _selectedContentIndex == 1,
+                            onTap:
+                                () => setState(() => _selectedContentIndex = 1),
+                          ),
+                          const SizedBox(width: 12),
+                          _CourseDetailChip(
+                            label: 'Achievements',
+                            isSelected: _selectedContentIndex == 2,
+                            onTap:
+                                () => setState(() => _selectedContentIndex = 2),
+                          ),
+                          const SizedBox(width: 12),
+                          _CourseDetailChip(
+                            label: 'Resources',
+                            isSelected: _selectedContentIndex == 3,
+                            onTap:
+                                () => setState(() => _selectedContentIndex = 3),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Content based on selected tab
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildContentBasedOnTab(
+                            context,
+                            primaryColor,
+                            textTheme,
+                          ),
+                          const SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildActionWidgets() {
+    final isCollapsed = scrollOffset > _getCollapseThreshold();
+
+    if (isCollapsed) {
+      // Show minimized preview image when collapsed
+      return [
+        GestureDetector(
+          onTap: () {
+            _expandPreview();
+          },
+          child: Row(
+            children: [
+              Text(
+                'English Beginner Level',
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(width: 100), // Space between text and image
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                width: 80,
+                height: 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        'https://picsum.photos/id/1062/600/400',
+                        fit: BoxFit.cover,
+                      ),
+                      // Optional: Add a subtle border
+                    ],
+                  ),
                 ),
               ),
             ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // Background Image
-                  Image.network(
-                    'https://picsum.photos/id/1062/600/400',
-                    fit: BoxFit.cover,
-                  ),
-                  // Gradient Overlay
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withValues(alpha: 0.3),
-                          Colors.transparent,
-                          Colors.black.withValues(alpha: 0.7),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // Play/Pause Button
-                  Center(
-                    child: Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.95),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.25),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          _isPlaying ? Icons.pause : Icons.play_arrow,
-                          color: primaryColor,
-                          size: 40,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isPlaying = !_isPlaying;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  // Video Controls at Bottom
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black.withValues(alpha: 0.6),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _currentTime,
-                                style: textTheme.bodySmall?.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                _totalTime,
-                                style: textTheme.bodySmall?.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          LinearProgressIndicator(
-                            value: _videoProgress,
-                            backgroundColor: Colors.white.withValues(
-                              alpha: 0.3,
-                            ),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              primaryColor,
-                            ),
-                            minHeight: 4,
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: List.generate(_totalVideos, (index) {
-                                  return Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 4.0,
-                                    ),
-                                    width: 8,
-                                    height: 8,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          index == _currentVideoIndex
-                                              ? primaryColor
-                                              : Colors.white.withValues(
-                                                alpha: 0.5,
-                                              ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  );
-                                }),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.all(0),
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.fullscreen,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+          ),
+        ),
+      ];
+    } else {
+      // Show more options button when expanded
+      return [
+        Padding(
+          padding: const EdgeInsets.only(right: 4.0),
+          child: IconButton(
+            icon: const Icon(Icons.more_horiz, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CourseRemindersScreen(),
+                ),
+              );
+            },
+          ),
+        ),
+      ];
+    }
+  }
+
+  Widget _buildFlexibleSpaceBackground(
+    Color primaryColor,
+    TextTheme textTheme,
+  ) {
+    final isCollapsed = scrollOffset > _getCollapseThreshold();
+
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 200),
+      opacity: isCollapsed ? 0.0 : 1.0,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background Image
+          Image.network(
+            'https://picsum.photos/id/1062/600/400',
+            fit: BoxFit.cover,
+          ),
+          // Gradient Overlay
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withValues(alpha: 0.3),
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.7),
                 ],
               ),
             ),
           ),
 
-          // Content Section
-          SliverToBoxAdapter(
+          // Preview Info at Bottom
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
               decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(30.0),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.transparent,
+                  ],
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 32),
-
-                  // Course Info Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'English Beginner Level',
-                          style: textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            letterSpacing: -0.5,
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Preview',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Learn essential English skills, including grammar, vocabulary, and practical conversation basics.',
-                          style: textTheme.bodyLarge?.copyWith(
-                            color: Colors.grey[700],
-                            height: 1.6,
-                            fontSize: 16,
-                          ),
+                      ),
+                      Text(
+                        totalTime,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 32),
-
-                  // Custom Tab Chips
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Row(
-                      children: [
-                        _CourseDetailChip(
-                          label: 'Overview',
-                          isSelected: _selectedContentIndex == 0,
-                          onTap:
-                              () => setState(() => _selectedContentIndex = 0),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: List.generate(totalVideos, (index) {
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color:
+                                  index == currentVideoIndex
+                                      ? primaryColor
+                                      : Colors.white.withValues(alpha: 0.5),
+                              shape: BoxShape.circle,
+                            ),
+                          );
+                        }),
+                      ),
+                      Text(
+                        '${currentVideoIndex + 1} of $totalVideos',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
                         ),
-                        const SizedBox(width: 12),
-                        _CourseDetailChip(
-                          label: 'Course',
-                          isSelected: _selectedContentIndex == 1,
-                          onTap:
-                              () => setState(() => _selectedContentIndex = 1),
-                        ),
-                        const SizedBox(width: 12),
-                        _CourseDetailChip(
-                          label: 'Achievements',
-                          isSelected: _selectedContentIndex == 2,
-                          onTap:
-                              () => setState(() => _selectedContentIndex = 2),
-                        ),
-                        const SizedBox(width: 12),
-                        _CourseDetailChip(
-                          label: 'Resources',
-                          isSelected: _selectedContentIndex == 3,
-                          onTap:
-                              () => setState(() => _selectedContentIndex = 3),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Content based on selected tab
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildContentBasedOnTab(
-                          context,
-                          primaryColor,
-                          textTheme,
-                        ),
-                        const SizedBox(height: 32),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -379,6 +402,17 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         ],
       ),
     );
+  }
+
+  double _getCollapseThreshold() {
+    final expandedHeight = MediaQuery.of(context).size.height * 0.65;
+    return expandedHeight * 0.7; // Collapse when 70% scrolled
+  }
+
+  void _expandPreview() {
+    // Scroll back to top to expand the preview
+    // You'll need to add a ScrollController to implement this
+    // scrollController.animateTo(0, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   Widget _buildContentBasedOnTab(
@@ -1255,7 +1289,7 @@ class _CourseDetailChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
         decoration: BoxDecoration(
           color: isSelected ? primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(25.0),
@@ -1269,6 +1303,7 @@ class _CourseDetailChip extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: textTheme.bodyLarge?.copyWith(
+            fontSize: 14,
             color: isSelected ? Colors.white : Colors.black,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
