@@ -78,7 +78,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.filter_list, color: Colors.black), // Filter icon
+            icon: Icon(Icons.filter_list, color: primaryColor), // Filter icon
             onPressed: () {
               // Handle filter action
             },
@@ -107,7 +107,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     Map<String, dynamic> course,
     Color primaryColor,
     TextTheme textTheme,
-    int index, // Receive index
+    int index,
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
@@ -123,97 +123,119 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(16.0),
-            ),
-            child: Stack(
-              children: [
-                Image.network(
-                  course['image']!,
-                  height: 180, // Larger image height as per image
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16.0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16.0),
+          onTap: () {
+            // Handle card tap - navigate to course details
+            print('Tapped on course: ${course['title']}');
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailScreen(course: course)));
+          },
+          hoverColor: primaryColor.withValues(
+            alpha: 0.05,
+          ), // Subtle hover effect
+          splashColor: primaryColor.withValues(
+            alpha: 0.1,
+          ), // Splash effect on tap
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16.0),
                 ),
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.8),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        course['is_favorite']
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color:
-                            course['is_favorite'] ? Colors.red : Colors.black,
-                        size: 20,
-                      ),
-                      onPressed: () {
-                        _toggleFavorite(index); // Call the toggle method
-                      },
-                      splashRadius: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  course['category']!,
-                  style: textTheme.bodySmall?.copyWith(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  course['title']!,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
-                    Text(
-                      course['author']!,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Image.network(
+                      course['image']!,
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
-                    Text(
-                      course['price']!,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor,
+                    Positioned(
+                      top: 12,
+                      right: 12,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.8),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            course['is_favorite']
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color:
+                                course['is_favorite']
+                                    ? Colors.red
+                                    : Colors.black,
+                            size: 20,
+                          ),
+                          onPressed: () {
+                            _toggleFavorite(index);
+                          },
+                          splashRadius: 20,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      course['category']!,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      course['title']!,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            course['author']!,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: Colors.grey[600],
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          course['price']!,
+                          style: textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -104,7 +104,7 @@ class SocialAuthButton extends StatelessWidget {
   Color _getButtonColor() {
     switch (type) {
       case ButtonType.apple:
-        return Colors.black;
+        return Colors.white;
       case ButtonType.google:
         // Using white for Google button background as is common
         return Colors.white;

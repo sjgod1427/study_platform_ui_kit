@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // For social icons
@@ -70,27 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your full name',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 8),
-                  child: Icon(Icons.person_outline, color: Colors.grey[600]),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide:
-                      BorderSide.none, // No border for the input field itself
-                ),
-                filled: true,
-                fillColor: Colors.grey[100], // Light grey background
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.name,
-            ),
+            BasicTextField(type: BasicTextFieldType.fullName),
             const SizedBox(height: 20),
             Text(
               'Email',
@@ -100,26 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 8),
-                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            BasicTextField(type: BasicTextFieldType.email),
             const SizedBox(height: 20),
             Text(
               'Password',
@@ -129,43 +91,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              obscureText: !_isPasswordVisible,
-              decoration: InputDecoration(
-                hintText: 'Enter your password',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 8),
-                  child: Icon(Icons.lock_outline, color: Colors.grey[600]),
-                ),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.grey[600],
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
-            ),
+            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -231,14 +157,17 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             const SizedBox(height: 24),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {
                       // Handle Google Sign Up
                     },
-                    icon: Icon(FontAwesomeIcons.google, color: Colors.black),
+                    icon: Image.network(
+                      'https://img.icons8.com/?size=100&id=17949&format=png',
+                      height: 20,
+                    ),
+
                     label: Text(
                       'Google',
                       style: textTheme.titleMedium?.copyWith(
@@ -260,12 +189,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: () {
                       // Handle Facebook Sign Up
                     },
-                    icon: Icon(
-                      FontAwesomeIcons.facebook,
-                      color: Colors.blue[800],
-                    ),
+                    icon: Icon(FontAwesomeIcons.apple, color: Colors.black),
                     label: Text(
-                      'Facebook',
+                      'Apple',
                       style: textTheme.titleMedium?.copyWith(
                         color: Colors.black,
                       ),

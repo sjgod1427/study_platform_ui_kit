@@ -134,7 +134,7 @@ class _ContentTypeChip extends StatelessWidget {
           width: 1.5,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0), // Rounded corners
+          borderRadius: BorderRadius.circular(30.0), // Rounded corners
         ),
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         elevation: 0, // No shadow

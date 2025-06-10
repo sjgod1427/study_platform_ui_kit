@@ -58,7 +58,8 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                     ),
                     Positioned(
                       bottom: 0,
-                      right: 0,
+                      right: 1,
+                      left: 5,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -66,7 +67,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: primaryColor,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         child: Text(
@@ -110,7 +111,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
                       vertical: 10,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
                   child: Text(
@@ -329,6 +330,10 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
     );
   }
 
+  // Add this as a class member variable (outside any method)
+  Set<int> _favoritedCourseIndices = <int>{};
+
+  // Updated _buildFeaturedClassList method
   Widget _buildFeaturedClassList(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final primaryColor = Theme.of(context).primaryColor;
@@ -346,8 +351,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
       },
       {
         'category': 'Language',
-        'title':
-            'TOEFL Preparation Course: Boost Your E...', // Truncated as per image
+        'title': 'TOEFL Preparation Course: Boost Your E...',
         'image': 'https://picsum.photos/id/603/200/150',
         'rating': 4.2,
         'reviews': 886,
@@ -368,149 +372,182 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
     ];
 
     return SizedBox(
-      height: 280, // Height for course cards
+      height: 280,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
+          final isFavorited = _favoritedCourseIndices.contains(index);
+
           return Container(
-            width: 200, // Fixed width for each card
+            width: 200,
             margin: const EdgeInsets.only(right: 16.0),
-            decoration: BoxDecoration(
+            child: Material(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withValues(alpha: 0.1),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16.0),
+              elevation: 3,
+              shadowColor: Colors.grey.withValues(alpha: 0.1),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16.0),
+                onTap: () => {},
+                child: Ink(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
-                  child: Stack(
-                    children: [
-                      Image.network(
-                        course['image']!,
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                        top: 12,
-                        right: 12,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.8),
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.favorite_border,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                            onPressed: () {},
-                            splashRadius: 20, // Reduce splash radius
-                          ),
-                        ),
-                      ),
-                      if (course['tag'] != null)
-                        Positioned(
-                          top: 12,
-                          left: 12,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.7),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              course['tag']!,
-                              style: textTheme.bodySmall?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        course['category']!,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(16.0),
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        course['title']!,
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        child: Stack(
+                          children: [
+                            Image.network(
+                              course['image']!,
+                              height: 120,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                            Positioned(
+                              top: 12,
+                              right: 12,
+                              child: Material(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                shape: const CircleBorder(),
+                                elevation: 2,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () {
+                                    setState(() {
+                                      if (isFavorited) {
+                                        _favoritedCourseIndices.remove(index);
+                                      } else {
+                                        _favoritedCourseIndices.add(index);
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    alignment: Alignment.center,
+                                    child: AnimatedSwitcher(
+                                      duration: const Duration(
+                                        milliseconds: 200,
+                                      ),
+                                      child: Icon(
+                                        isFavorited
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        key: ValueKey(isFavorited),
+                                        color:
+                                            isFavorited
+                                                ? Colors.red
+                                                : Colors.black54,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (course['tag'] != null)
+                              Positioned(
+                                top: 12,
+                                left: 12,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.7),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    course['tag']!,
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${course['rating']} (${course['reviews']} reviews)',
-                            style: textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course['category']!,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            course['price']!,
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: primaryColor,
+                            const SizedBox(height: 4),
+                            Text(
+                              course['title']!,
+                              style: textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            course['oldPrice']!,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[500],
-                              decoration: TextDecoration.lineThrough,
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${course['rating']} (${course['reviews']} reviews)',
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  course['price']!,
+                                  style: textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  course['oldPrice']!,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey[500],
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           );
         },

@@ -98,28 +98,38 @@ class _LanguageScreenState extends State<LanguageScreen> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search language ...',
-                hintStyle: textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                hintText: 'Search Something',
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 8),
                   child: Icon(Icons.search, color: Colors.grey[600]),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.close, color: Colors.grey[600]),
+                    onPressed: () {
+                      _searchController.clear();
+                      // Perform search clear logic
+                    },
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
                 filled: true,
-                fillColor:
-                    Colors.grey[100], // Light grey background for search bar
+                fillColor: Colors.white, // White background for the input
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: 16.0,
                   horizontal: 16.0,
                 ),
               ),
               onChanged: (value) {
-                // Implement search filtering logic here if needed
+                // Perform search as user types
               },
             ),
           ),

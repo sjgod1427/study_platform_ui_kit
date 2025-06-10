@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -133,26 +134,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 4),
-                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 40),
             PrimaryTextButton(text: "Send Email"),
           ],

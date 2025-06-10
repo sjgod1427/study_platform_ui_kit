@@ -62,30 +62,38 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: TextField(
               decoration: InputDecoration(
-                focusColor: primaryColor.withValues(alpha: 0.02),
-                hoverColor: primaryColor.withValues(alpha: 0.02),
-                hintText: 'Search',
+                hintText: 'Search Something',
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 4,
-                    top: 12,
-                    bottom: 12,
-                  ), // Add padding to the left of the icon
-                  child: Icon(Icons.search, color: Colors.grey[600], size: 24),
+                  padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 8),
+                  child: Icon(Icons.search, color: Colors.grey[600]),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.close, color: Colors.grey[600]),
+                    onPressed: () {
+                      // Perform search clear logic
+                    },
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
                 filled: true,
-                fillColor: Colors.grey[100],
-                isDense: true, // Reduces the overall height of the input field
+                fillColor: Colors.white, // White background for the input
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 12.0, // Adjusted vertical padding for hint text
+                  vertical: 16.0,
                   horizontal: 16.0,
                 ),
               ),
+              onChanged: (value) {
+                // Perform search as user types
+              },
             ),
           ),
           const SizedBox(height: 16),

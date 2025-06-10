@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -126,27 +127,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _fullNameController,
-              keyboardType: TextInputType.name,
-              decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(Icons.person_outline, color: Colors.black),
-                ), // Black icon
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide:
-                      BorderSide.none, // No border for the input field itself
-                ),
-                filled: true,
-                fillColor: Colors.grey[100], // Light grey background
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-            ),
+            BasicTextField(type: BasicTextFieldType.fullName),
             const SizedBox(height: 20),
 
             // Email Input (Read-only)
@@ -158,27 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              readOnly: true, // Email field is read-only as per image
-              decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Icon(Icons.mail_outline, color: Colors.black),
-                ), // Black icon
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-            ),
+            BasicTextField(type: BasicTextFieldType.email),
 
             const Spacer(), // Pushes the button to the bottom
             // Save Button

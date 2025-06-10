@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:canwa/Widgets/social_auth_button.dart';
 import 'package:flutter/material.dart';
@@ -73,26 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 8),
-                  child: Icon(Icons.mail_outline, color: Colors.grey[600]),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            BasicTextField(type: BasicTextFieldType.email),
             const SizedBox(height: 20),
             Text(
               'Password',
@@ -102,40 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              obscureText: !_isPasswordVisible,
-              decoration: InputDecoration(
-                hintText: 'Enter your password',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 8),
-                  child: Icon(Icons.lock_outline, color: Colors.grey[600]),
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.grey[600],
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
-            ),
+            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 16),
             Align(
               alignment: Alignment.centerRight,
@@ -164,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 24),
             SocialAuthButton(type: ButtonType.google, onPressed: () {}),
             const SizedBox(height: 16),
-            SocialAuthButton(type: ButtonType.facebook, onPressed: () {}),
+            SocialAuthButton(type: ButtonType.apple, onPressed: () {}),
             const SizedBox(height: 24),
             Center(
               child: RichText(

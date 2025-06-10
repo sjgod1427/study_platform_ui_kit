@@ -1,3 +1,4 @@
+import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -82,38 +83,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _newPasswordController,
-              obscureText: !_isNewPasswordVisible,
-              decoration: InputDecoration(
-                hintText: '', // Hint text removed
-                prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isNewPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.grey[600],
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isNewPasswordVisible = !_isNewPasswordVisible;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
-            ),
+            BasicTextField(type: BasicTextFieldType.password),
             const SizedBox(height: 20),
             Text(
               'Confirm New Password',
@@ -123,37 +93,9 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _confirmPasswordController,
-              obscureText: !_isConfirmPasswordVisible,
-              decoration: InputDecoration(
-                hintText: '', // Hint text removed
-                prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isConfirmPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.grey[600],
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              keyboardType: TextInputType.visiblePassword,
+            BasicTextField(
+              type: BasicTextFieldType.password,
+              hintText: 'Enter new password',
             ),
             const SizedBox(height: 12),
             if (_newPasswordController.text.isNotEmpty &&

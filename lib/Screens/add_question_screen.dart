@@ -75,7 +75,11 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
                 hintStyle: textTheme.bodyLarge?.copyWith(
                   color: Colors.grey[600],
                 ),
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(color: Colors.grey[300]!, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide(color: Colors.grey[300]!, width: 1.5),
                 ),

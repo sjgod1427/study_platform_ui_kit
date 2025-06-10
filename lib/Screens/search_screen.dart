@@ -120,9 +120,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     },
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(color: Colors.grey[300]!, width: 1.5),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
                 filled: true,
                 fillColor: Colors.white, // White background for the input
