@@ -1090,7 +1090,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
                       courseProgress.isMilestoneAchieved(0.50),
                     ),
                     Positioned(
-                      left: 112.0,
+                      left: 100.0,
                       top: 12,
                       child: SizedBox(
                         width: 195.0,
@@ -1131,11 +1131,47 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    _buildProgressPoint(
-                      constraints.maxWidth,
-                      1.0,
-                      '100\nPoints',
-                      courseProgress.isMilestoneAchieved(1.0),
+                    Positioned(
+                      left: 180.0,
+                      top: 12,
+                      child: SizedBox(
+                        width: 195.0,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 600),
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.grey[400]!,
+                                  width: 2.5,
+                                ),
+                                boxShadow: null,
+                              ),
+                              child: const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              '100\nPints',
+                              textAlign: TextAlign.center,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                height: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -1193,7 +1229,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
     final double clampedLeft = idealLeft.clamp(0.0, maxWidth - pointAreaWidth);
 
     return Positioned(
-      left: clampedLeft,
+      left: clampedLeft - 40,
       top: 12,
       child: SizedBox(
         width: pointAreaWidth,
