@@ -1,6 +1,7 @@
 import 'package:canwa/Screens/faq_screen.dart';
 import 'package:canwa/Screens/help_and_support_screen.dart';
 import 'package:canwa/Screens/language_screen.dart';
+import 'package:canwa/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -232,7 +233,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.logout,
               title: 'Logout',
               onTap: () {
-                // Implement logout logic
+                Navigator.of(context).push(
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => LoginScreen()),
+                );
               },
               // No trailing icon needed for logout as per image
             ),
