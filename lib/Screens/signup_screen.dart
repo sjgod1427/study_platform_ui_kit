@@ -1,6 +1,9 @@
+import 'package:canwa/Screens/login_screen.dart';
+import 'package:canwa/Screens/verification_code_screen.dart';
 import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:canwa/Widgets/social_auth_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -133,7 +136,14 @@ class _SignupScreenState extends State<SignupScreen> {
               ],
             ),
             const SizedBox(height: 24),
-            PrimaryTextButton(text: "Sign Up"),
+            PrimaryTextButton(
+              text: "Sign Up",
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => OtpScreen()),
+                );
+              },
+            ),
             const SizedBox(height: 24),
             Center(
               child: Text(
@@ -160,6 +170,17 @@ class _SignupScreenState extends State<SignupScreen> {
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () {
+                              // 🧭 Navigate to SignUp screen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
+                            },
                     ),
                   ],
                 ),

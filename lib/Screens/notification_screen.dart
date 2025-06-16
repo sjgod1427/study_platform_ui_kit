@@ -95,7 +95,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               color: primaryColor,
               size: 20,
             ), // Black icon
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
         title: Text(

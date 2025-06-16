@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/home_screen.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +113,9 @@ class _LearningInterestsScreenState extends State<LearningInterestsScreen> {
             PrimaryTextButton(
               text: 'Done',
               onPressed: () {
-                _onDonePressed();
+                Navigator.of(context).push(
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => HomeScreen()),
+                );
               },
             ),
           ],

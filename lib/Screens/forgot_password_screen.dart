@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/create_new_password_screen.dart';
 import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +133,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: TextEditingController(),
             ),
             const SizedBox(height: 40),
-            PrimaryTextButton(text: "Send Email"),
+            PrimaryTextButton(
+              text: "Send Email",
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => CreateNewPasswordScreen(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:canwa/Screens/notification_screen.dart';
+import 'package:canwa/Screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -63,8 +65,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed:
                   onSearchPressed ??
                   () {
-                    // Handle search
-                    // print('Search pressed');
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => SearchScreen(),
+                      ),
+                    );
                   },
             ),
             Stack(
@@ -77,8 +82,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed:
                       onNotificationsPressed ??
                       () {
-                        // Handle notifications
-                        // print('Notifications pressed');
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => NotificationScreen(),
+                          ),
+                        );
                       },
                 ),
                 if (showNotificationBadge)

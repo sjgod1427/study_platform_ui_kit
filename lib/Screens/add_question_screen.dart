@@ -105,7 +105,12 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
             ),
             const Spacer(), // Pushes the button to the bottom
             // Send Button
-            PrimaryTextButton(text: 'Send'),
+            PrimaryTextButton(
+              text: 'Send',
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         ),
       ),

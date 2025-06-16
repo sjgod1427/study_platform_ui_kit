@@ -131,7 +131,16 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             ),
           ),
           // Confirmation Button at the bottom
-          PrimaryTextButton(text: 'Confirmation'),
+          PrimaryTextButton(
+            text: 'Confirmation',
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => AddNewCardScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

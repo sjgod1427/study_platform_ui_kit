@@ -34,7 +34,9 @@ class _ReplayQuestionScreenState extends State<ReplayQuestionScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           iconSize: 18,
         ),
         title: Text(

@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/payment_method_screen.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +143,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
             const Spacer(), // Pushes the button to the bottom
             // Checkout Button
-            PrimaryTextButton(text: "Checkout Course"),
+            PrimaryTextButton(
+              text: "Checkout Course",
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => PaymentMethodScreen(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

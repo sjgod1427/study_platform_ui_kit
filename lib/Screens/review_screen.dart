@@ -19,7 +19,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor, size: 20),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           iconSize: 20,
         ),
         title: Text(

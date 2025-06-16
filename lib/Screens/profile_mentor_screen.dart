@@ -27,7 +27,9 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           iconSize: 20,
         ),
         title: Text(

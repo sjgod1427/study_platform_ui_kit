@@ -956,9 +956,22 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             padding: const EdgeInsets.only(right: 16.0),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 36,
-                  backgroundImage: NetworkImage(mentor['image']!),
+                Material(
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () {
+                      // Handle tap event here
+                      print('Tapped on ${mentor['name']}');
+                    },
+                    customBorder: const CircleBorder(),
+                    child: Ink.image(
+                      image: NetworkImage(mentor['image']!),
+                      width: 72, // Diameter = 2 * radius (36 * 2)
+                      height: 72,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(

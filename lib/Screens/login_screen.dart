@@ -1,6 +1,9 @@
+import 'package:canwa/Screens/forgot_password_screen.dart';
+import 'package:canwa/Screens/signup_screen.dart';
 import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:canwa/Widgets/social_auth_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -78,8 +81,13 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // Handle forgot password
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => ForgotPasswordScreen(),
+                    ),
+                  );
                 },
+
                 child: Text(
                   'Forgot password?',
                   style: textTheme.bodyMedium?.copyWith(
@@ -115,6 +123,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () {
+                              // 🧭 Navigate to SignUp screen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignupScreen(),
+                                ),
+                              );
+                            },
                     ),
                   ],
                 ),

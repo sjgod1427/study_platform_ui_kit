@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Widgets/category_chip.dart'; // Reusing for consistency, though we'll make a new chip type
@@ -72,7 +73,9 @@ class _SearchScreenState extends State<SearchScreen> {
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: primaryColor),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           iconSize: 20,
         ),
         title: Text(
@@ -248,9 +251,26 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: const EdgeInsets.only(right: 16.0),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(mentor['image']!),
+                Material(
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () {
+                      // Handle the tap here
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => ProfileMentorScreen(),
+                        ),
+                      );
+                    },
+                    customBorder: const CircleBorder(),
+                    child: Ink.image(
+                      image: NetworkImage(mentor['image']!),
+                      width: 80, // Since radius is 40
+                      height: 80,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(

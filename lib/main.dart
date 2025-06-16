@@ -29,6 +29,7 @@ import 'package:canwa/Screens/search_screen.dart';
 import 'package:canwa/Screens/signup_screen.dart';
 import 'package:canwa/Screens/verification_code_screen.dart';
 import 'package:canwa/Screens/wishlist_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:pixel_preview/pixel_app/pixel_group.dart';
 import 'package:pixel_preview/pixel_preview.dart';
@@ -148,7 +149,7 @@ class MyApp extends StatelessWidget {
               PixelPreview(
                 presets: ScreenPresets(),
                 enabled: true,
-                child: const HomeScreen(),
+                child: const MainScreen(),
               ),
               PixelPreview(
                 presets: ScreenPresets(),
@@ -278,7 +279,7 @@ class MyApp extends StatelessWidget {
               PixelPreview(
                 presets: ScreenPresets(),
                 enabled: true,
-                child: const WishlistScreen(),
+                child: const Placeholder(),
               ),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:canwa/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -265,7 +266,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
     ];
 
     return SizedBox(
-      height: 120, // Height for mentor avatars and names
+      height: 120,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -276,9 +277,26 @@ class _HomeScreen2State extends State<HomeScreen2> {
             padding: const EdgeInsets.only(right: 16.0),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(mentor['image']!),
+                Material(
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  child: Ink.image(
+                    image: NetworkImage(mentor['image']!),
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: () {
+                        // Handle tap here
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => ProfileMentorScreen(),
+                          ),
+                        );
+                      },
+                      customBorder: const CircleBorder(),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(

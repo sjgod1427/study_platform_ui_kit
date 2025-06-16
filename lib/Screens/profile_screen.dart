@@ -1,3 +1,6 @@
+import 'package:canwa/Screens/faq_screen.dart';
+import 'package:canwa/Screens/help_and_support_screen.dart';
+import 'package:canwa/Screens/language_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -124,7 +127,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.translate,
               title: 'Language',
               onTap: () {
-                // Navigate to language settings
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => LanguageScreen(),
+                  ),
+                );
               },
               trailing: Icon(
                 Icons.arrow_forward_ios,
@@ -193,7 +200,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.help_outline,
               title: 'FAQ',
               onTap: () {
-                // Navigate to FAQ screen
+                Navigator.of(context).push(
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => FaqScreen()),
+                );
               },
               trailing: Icon(
                 Icons.arrow_forward_ios,
@@ -206,7 +215,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.volume_up,
               title: 'Help & Support',
               onTap: () {
-                // Navigate to help & support screen
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => HelpAndSupportScreen(),
+                  ),
+                );
               },
               trailing: Icon(
                 Icons.arrow_forward_ios,
@@ -284,37 +297,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required VoidCallback onTap,
     Widget? trailing,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.grey[100], // Light grey background as per image
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              icon,
-              color: Colors.black, // Black icon as per image
-              size: 20,
+    final bool hasSwitch = trailing is Switch;
+
+    final rowContent = Row(
+      children: [
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: Colors.black, size: 20),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            title,
+            style: textTheme.titleMedium?.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: textTheme.titleMedium?.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        ),
+        if (trailing != null) trailing,
+      ],
+    );
+
+    // Use InkWell only if there's no Switch
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child:
+          hasSwitch
+              ? rowContent // Don't use InkWell for Switch rows
+              : Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: onTap,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: rowContent,
+                  ),
+                ),
               ),
-            ),
-          ),
-          if (trailing != null) trailing,
-        ],
-      ),
     );
   }
 }
