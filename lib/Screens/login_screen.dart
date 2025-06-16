@@ -1,4 +1,5 @@
 import 'package:canwa/Screens/forgot_password_screen.dart';
+import 'package:canwa/Screens/home_screen.dart';
 import 'package:canwa/Screens/signup_screen.dart';
 import 'package:canwa/Widgets/auth_fields.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
@@ -98,7 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            PrimaryTextButton(text: 'Login'),
+            PrimaryTextButton(
+              text: 'Login',
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => HomeScreen()),
+                );
+              },
+            ),
             const SizedBox(height: 24),
             Center(
               child: Text(
