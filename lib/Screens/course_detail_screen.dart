@@ -1,4 +1,5 @@
 import 'package:canwa/Screens/learning_screen.dart';
+import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Screens/course_reminders_screen.dart'; // Import the new reminders screen
 
@@ -941,7 +942,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-                      // Handle tap event here
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => ProfileMentorScreen(),
+                        ),
+                      );
                     },
                     customBorder: const CircleBorder(),
                     child: Ink.image(
