@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class WishlistScreen extends StatefulWidget {
@@ -291,7 +292,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
       borderRadius: BorderRadius.circular(16.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(
+            PageRouteBuilder(pageBuilder: (_, __, ___) => CourseDetailScreen()),
+          );
+        },
         hoverColor: primaryColor.withValues(
           alpha: 0.05,
         ), // subtle hover on web/desktop

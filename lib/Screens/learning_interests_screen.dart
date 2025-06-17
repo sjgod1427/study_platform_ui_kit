@@ -114,7 +114,7 @@ class _LearningInterestsScreenState extends State<LearningInterestsScreen> {
               text: 'Done',
               onPressed: () {
                 Navigator.of(context).push(
-                  PageRouteBuilder(pageBuilder: (_, __, ___) => HomeScreen()),
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => MainScreen()),
                 );
               },
             ),

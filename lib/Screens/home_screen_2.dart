@@ -1,5 +1,6 @@
-import 'package:canwa/Screens/profile_mentor_screen.dart';
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:canwa/Widgets/appbar.dart';
+import 'package:canwa/Widgets/category_chip.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen2 extends StatefulWidget {
@@ -10,69 +11,43 @@ class HomeScreen2 extends StatefulWidget {
 }
 
 class _HomeScreen2State extends State<HomeScreen2> {
-  int _selectedIndex =
-      0; // 0 for Home, 1 for Wishlist, 2 for My Course, 3 for Profile
+  int _selectedIndex = 0; // Profile tab is selected by default
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+    // In a real app, you would navigate to different screens here
+    // based on the selected index.
+    // Example:
+    // if (index == 0) {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    // } else if (index == 1) {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WishlistScreen()));
+    // } else if (index == 2) {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyCourseScreen()));
+    // }
   }
+
+  final List<String> _courseCategories = const [
+    'Education',
+    'Technology',
+    'Design',
+    'Language',
+    'Health and Wellness',
+    'Business and Finance',
+    'Data Science',
+    'Marketing',
+    'Art',
+    'Music',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
     final textTheme = Theme.of(context).textTheme;
+    final primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Continue Learning Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: _buildSectionHeader(
-                context,
-                'Continue Learning',
-                onSeeAllTap: () => {},
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildContinueLearningList(context),
-            const SizedBox(height: 32),
-
-            // Popular Mentors Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: _buildSectionHeader(
-                context,
-                'Popular Mentors',
-                onSeeAllTap: () => {},
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildPopularMentorsList(context),
-            const SizedBox(height: 32),
-
-            // Popular Course Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: _buildSectionHeader(
-                context,
-                'Popular Course 🔥',
-                onSeeAllTap: () => {},
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildPopularCourseList(context),
-            const SizedBox(height: 20), // Padding for bottom nav bar
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -112,6 +87,42 @@ class _HomeScreen2State extends State<HomeScreen2> {
         ),
         unselectedLabelStyle: textTheme.bodySmall,
       ),
+      backgroundColor: Colors.white,
+      appBar: const CustomAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionHeader(
+              context,
+              'Latest quiz',
+              showPagination: true,
+              currentPage: 0,
+              totalPages: 3,
+            ),
+            const SizedBox(height: 16),
+            _buildLatestQuizCard(context),
+            const SizedBox(height: 32),
+            _buildSectionHeader(
+              context,
+              'Course Categories',
+              onSeeAllTap: () => {},
+            ),
+            const SizedBox(height: 16),
+            _buildCourseCategoriesList(context),
+            const SizedBox(height: 32),
+            _buildSectionHeader(
+              context,
+              'Recommendation',
+              onSeeAllTap: () => {},
+            ),
+            const SizedBox(height: 16),
+            _buildRecommendationCourseList(context),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
     );
   }
 
@@ -119,6 +130,9 @@ class _HomeScreen2State extends State<HomeScreen2> {
     BuildContext context,
     String title, {
     VoidCallback? onSeeAllTap,
+    bool showPagination = false,
+    int currentPage = 0,
+    int totalPages = 0,
   }) {
     final primaryColor = Theme.of(context).primaryColor;
     return Row(
@@ -126,13 +140,27 @@ class _HomeScreen2State extends State<HomeScreen2> {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        if (onSeeAllTap != null)
+        if (showPagination)
+          Row(
+            children: List.generate(totalPages, (index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: currentPage == index ? 24 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: currentPage == index ? primaryColor : Colors.grey[300],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              );
+            }),
+          )
+        else if (onSeeAllTap != null)
           TextButton(
             onPressed: onSeeAllTap,
             style: TextButton.styleFrom(
@@ -153,160 +181,125 @@ class _HomeScreen2State extends State<HomeScreen2> {
     );
   }
 
-  Widget _buildContinueLearningList(BuildContext context) {
+  Widget _buildLatestQuizCard(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final primaryColor = Theme.of(context).primaryColor;
 
-    final List<Map<String, dynamic>> continueCourses = [
-      {
-        'image': 'https://picsum.photos/id/1043/100/80',
-        'title': 'Web Development Bootcamp: Build and Deploy Your Own Website',
-        'progress': 0.75,
-        'completed_text': '75% completed',
-      },
-      {
-        'image': 'https://picsum.photos/id/1047/100/80',
-        'title': 'Mobile App UI/UX Design Fundamentals with Figma',
-        'progress': 0.50,
-        'completed_text': '50% completed',
-      },
-      {
-        'image': 'https://picsum.photos/id/1048/100/80',
-        'title': 'Introduction to Data Science with Python',
-        'progress': 0.20,
-        'completed_text': '20% completed',
-      },
-    ];
-
-    return SizedBox(
-      height: 120, // Height for the continue learning cards
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        itemCount: continueCourses.length,
-        itemBuilder: (context, index) {
-          final course = continueCourses[index];
-          return Container(
-            width: 300, // Fixed width for each card
-            margin: const EdgeInsets.only(right: 16.0),
-            padding: const EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withValues(alpha: 0.1),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    course['image']!,
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        course['title']!,
-                        style: textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      LinearProgressIndicator(
-                        value: course['progress'],
-                        backgroundColor: Colors.grey[200],
-                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                        minHeight: 6,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        course['completed_text']!,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+    return Container(
+      width: double.infinity,
+      height: 200,
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildPopularMentorsList(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final List<Map<String, String>> mentors = [
-      {'name': 'Destiny', 'image': 'https://picsum.photos/id/1027/200/200'},
-      {'name': 'Kayley', 'image': 'https://picsum.photos/id/1025/200/200'},
-      {'name': 'Kirstin', 'image': 'https://picsum.photos/id/1011/200/200'},
-      {'name': 'Ramon', 'image': 'https://picsum.photos/id/1005/200/200'},
-      {'name': 'Gustave', 'image': 'https://picsum.photos/id/1009/200/200'},
-      {'name': 'Alice', 'image': 'https://picsum.photos/id/1004/200/200'},
-    ];
-
-    return SizedBox(
-      height: 120,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        itemCount: mentors.length,
-        itemBuilder: (context, index) {
-          final mentor = mentors[index];
-          return Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image.network(
+                'https://picsum.photos/id/401/400/200',
+                fit: BoxFit.cover,
+                color: Colors.black.withValues(alpha: 0.2),
+                colorBlendMode: BlendMode.darken,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Material(
-                  shape: const CircleBorder(),
-                  clipBehavior: Clip.antiAlias,
-                  child: Ink.image(
-                    image: NetworkImage(mentor['image']!),
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                    child: InkWell(
-                      onTap: () {
-                        // Handle tap here
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => ProfileMentorScreen(),
-                          ),
-                        );
-                      },
-                      customBorder: const CircleBorder(),
-                    ),
+                const Text(
+                  'Unleash Your Creative Knowledge!',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  mentor['name']!,
-                  style: textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.quiz,
+                      color: Colors.white.withValues(alpha: 0.8),
+                      size: 18,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '5 Quizzes',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.8),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Icon(
+                      Icons.access_time,
+                      color: Colors.white.withValues(alpha: 0.8),
+                      size: 18,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '1.5 Hours',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.8),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    'Start Quiz',
+                    style: textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourseCategoriesList(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _courseCategories.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: CategoryChip(
+              name: _courseCategories[index],
+              isSelected: false,
+              onTap: () {},
             ),
           );
         },
@@ -314,26 +307,25 @@ class _HomeScreen2State extends State<HomeScreen2> {
     );
   }
 
-  Widget _buildPopularCourseList(BuildContext context) {
+  Widget _buildRecommendationCourseList(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final primaryColor = Theme.of(context).primaryColor;
 
     final List<Map<String, dynamic>> courses = [
       {
-        'category': 'Design',
-        'title': 'Expert Wireframing for Mobile Design',
+        'category': 'Graphic Design',
+        'title': 'Expert Wireframing for Mobile',
         'image': 'https://picsum.photos/id/600/200/150',
         'rating': 4.5,
         'reviews': 1239,
         'price': '\$499',
         'oldPrice': '\$699',
-        'tag': 'New Course',
-        'isFavorite': false, // Added favorite state
+        'tag': null,
+        'isFavorite': false,
       },
       {
-        'category': 'Language',
-        'title':
-            'TOEFL Preparation Course: Boost Your E...', // Truncated as per image
+        'category': 'Science',
+        'title': 'Become a Great Scientist',
         'image': 'https://picsum.photos/id/603/200/150',
         'rating': 4.2,
         'reviews': 886,
@@ -356,15 +348,14 @@ class _HomeScreen2State extends State<HomeScreen2> {
     ];
 
     return SizedBox(
-      height: 280, // Height for course cards
+      height: 280,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
           return Container(
-            width: 200, // Fixed width for each card
+            width: 250,
             margin: const EdgeInsets.only(right: 16.0),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -383,10 +374,11 @@ class _HomeScreen2State extends State<HomeScreen2> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(16.0),
                 onTap: () {
-                  // Handle course card tap
-                  print('Popular course tapped: ${course['title']}');
-                  // You can navigate to course detail page here
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailPage(course: course)));
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const CourseDetailScreen(),
+                    ),
+                  );
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -418,10 +410,6 @@ class _HomeScreen2State extends State<HomeScreen2> {
                                         course['isFavorite'] =
                                             !course['isFavorite'];
                                       });
-                                      // You can also call a callback here to update parent state
-                                      print(
-                                        'Favorite toggled for: ${course['title']}',
-                                      );
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -472,19 +460,17 @@ class _HomeScreen2State extends State<HomeScreen2> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            course['category']!, // Added category text
+                            course['category']!,
                             style: textTheme.bodySmall?.copyWith(
-                              color:
-                                  primaryColor, // Category text in primary color
+                              color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 4),
                           Text(
                             course['title']!,
-                            style: textTheme.titleMedium?.copyWith(
+                            style: const TextStyle(
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),

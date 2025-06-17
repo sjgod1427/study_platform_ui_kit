@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Widgets/category_chip.dart';
 
@@ -169,7 +170,11 @@ class _ContinueLearningScreenState extends State<ContinueLearningScreen> {
               borderRadius: BorderRadius.circular(16.0),
               onTap: () {
                 // Handle card tap
-                print('Course progress card tapped: ${course['title']}');
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => CourseDetailScreen(),
+                  ),
+                );
                 // Add your navigation or action logic here
               },
               child: Padding(

@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class RecommendationScreen extends StatefulWidget {
@@ -130,7 +131,11 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           borderRadius: BorderRadius.circular(16.0),
           onTap: () {
             // Handle card tap - navigate to course details
-            print('Tapped on course: ${course['title']}');
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => CourseDetailScreen(),
+              ),
+            );
             // Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailScreen(course: course)));
           },
           hoverColor: primaryColor.withValues(

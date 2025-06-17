@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/learning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:canwa/Screens/course_reminders_screen.dart'; // Import the new reminders screen
 
@@ -48,32 +49,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  // Method to mark a lesson as complete
-  void _markLessonComplete(int lessonIndex) {
-    if (lessonIndex < _courseProgress.lessonCompletionStatus.length &&
-        !_courseProgress.lessonCompletionStatus[lessonIndex]) {
-      setState(() {
-        _courseProgress.lessonCompletionStatus[lessonIndex] = true;
-        _courseProgress = CourseProgress(
-          totalLessons: _courseProgress.totalLessons,
-          completedLessons:
-              _courseProgress.lessonCompletionStatus
-                  .where((completed) => completed)
-                  .length,
-          lessonCompletionStatus: _courseProgress.lessonCompletionStatus,
-        );
-      });
-    }
-  }
-
   // Method to simulate course progress (for demo purposes)
-  void _simulateProgress() {
-    final nextIncompleteLesson = _courseProgress.lessonCompletionStatus
-        .indexWhere((completed) => !completed);
-    if (nextIncompleteLesson != -1) {
-      _markLessonComplete(nextIncompleteLesson);
-    }
-  }
 
   // Add these variables to your State class
   double scrollOffset = 0.0;
@@ -109,7 +85,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               backgroundColor: Colors.white,
               elevation: 0,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: Icon(
                   Icons.keyboard_arrow_left_rounded,
                   size: 20,
@@ -444,11 +422,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             const SizedBox(height: 16),
             Center(
               child: ElevatedButton.icon(
-                onPressed:
-                    _courseProgress.completedLessons <
-                            _courseProgress.totalLessons
-                        ? _simulateProgress
-                        : null,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => LearningScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.play_lesson),
                 label: Text(
                   _courseProgress.completedLessons <
@@ -962,7 +942,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   child: InkWell(
                     onTap: () {
                       // Handle tap event here
-                      print('Tapped on ${mentor['name']}');
                     },
                     customBorder: const CircleBorder(),
                     child: Ink.image(
@@ -992,7 +971,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   }
 }
 
-// Functional Course Progress Bar Widget
+// Enhanced Course Progress Bar Widget with Milestones
 class _FunctionalCourseProgressBar extends StatelessWidget {
   final CourseProgress courseProgress;
   final Color primaryColor;
@@ -1013,7 +992,7 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.05),
+            color: Colors.grey.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -1034,11 +1013,21 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              Text(
-                '${courseProgress.progressPoints}%',
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '${courseProgress.progressPoints}%',
+                  style: textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                  ),
                 ),
               ),
             ],
@@ -1048,174 +1037,182 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
             '${courseProgress.completedLessons} of ${courseProgress.totalLessons} lessons completed',
             style: textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
 
-          // Progress bar with milestones
+          // Enhanced Progress bar with milestones
           LayoutBuilder(
             builder: (context, constraints) {
               return SizedBox(
-                height: 80,
+                height: 120,
                 child: Stack(
                   children: [
-                    // Base progress bar
+                    // Milestone labels at the top
                     Positioned(
-                      top: 20,
+                      top: 10,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildMilestoneLabel('0%', 0.0),
+                          _buildMilestoneLabel('25%', 0.25),
+                          _buildMilestoneLabel('50%', 0.5),
+                          _buildMilestoneLabel('75%', 0.75),
+                          _buildMilestoneLabel('100%', 1.0),
+                        ],
+                      ),
+                    ),
+
+                    // Base progress bar track
+                    Positioned(
+                      top: 45,
                       left: 0,
                       right: 0,
                       child: Container(
-                        height: 8,
+                        height: 12,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(6),
                         ),
                       ),
                     ),
 
-                    // Filled progress bar
+                    // Filled progress bar with gradient
                     Positioned(
-                      top: 20,
+                      top: 45,
                       left: 0,
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 800),
+                        duration: const Duration(milliseconds: 1200),
                         curve: Curves.easeInOut,
-                        height: 8,
+                        height: 12,
                         width:
                             constraints.maxWidth *
                             courseProgress.progressPercentage,
                         decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(4),
+                          gradient: LinearGradient(
+                            colors: [
+                              primaryColor.withOpacity(0.8),
+                              primaryColor,
+                              primaryColor.withOpacity(0.9),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withOpacity(0.3),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
                       ),
                     ),
 
-                    // Milestone points
-                    _buildProgressPoint(
-                      constraints.maxWidth,
-                      0.25,
-                      '25\nPoints',
-                      courseProgress.isMilestoneAchieved(0.25),
-                    ),
-                    _buildProgressPoint(
-                      constraints.maxWidth,
-                      0.50,
-                      '50\nPoints',
-                      courseProgress.isMilestoneAchieved(0.50),
-                    ),
-                    Positioned(
-                      left: 100.0,
-                      top: 12,
-                      child: SizedBox(
-                        width: 195.0,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 600),
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.grey[400]!,
-                                  width: 2.5,
+                    // Milestone markers
+                    ..._buildMilestoneMarkers(constraints.maxWidth),
+
+                    // Current progress indicator
+                    if (courseProgress.progressPercentage > 0)
+                      Positioned(
+                        top: 40,
+                        left:
+                            (constraints.maxWidth *
+                                courseProgress.progressPercentage) -
+                            11,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 1200),
+                          curve: Curves.easeInOut,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 22,
+                                height: 22,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: primaryColor,
+                                    width: 3,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: primaryColor.withOpacity(0.3),
+                                      blurRadius: 6,
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
                                 ),
-                                boxShadow: null,
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: primaryColor,
+                                  size: 12,
+                                ),
                               ),
-                              child: const Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 12,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '75\nPints',
-                              textAlign: TextAlign.center,
-                              style: textTheme.bodySmall?.copyWith(
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10,
-                                height: 1.2,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: 180.0,
-                      top: 12,
-                      child: SizedBox(
-                        width: 195.0,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 600),
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.grey[400]!,
-                                  width: 2.5,
-                                ),
-                                boxShadow: null,
-                              ),
-                              child: const Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 12,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '100\nPints',
-                              textAlign: TextAlign.center,
-                              style: textTheme.bodySmall?.copyWith(
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10,
-                                height: 1.2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+
+                    // Achievement badges for completed milestones
                   ],
                 ),
               );
             },
           ),
 
-          const SizedBox(height: 16),
-
-          // Dynamic motivational message
+          // Enhanced motivational message with better styling
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: primaryColor.withValues(alpha: 0.05),
+              gradient: LinearGradient(
+                colors: [
+                  primaryColor.withOpacity(0.05),
+                  primaryColor.withOpacity(0.08),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: primaryColor.withValues(alpha: 0.1),
+                color: primaryColor.withOpacity(0.15),
                 width: 1,
               ),
             ),
             child: Row(
               children: [
-                Icon(_getMotivationIcon(), color: primaryColor, size: 24),
-                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: primaryColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    _getMotivationIcon(),
+                    color: primaryColor,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
                 Expanded(
-                  child: Text(
-                    _getMotivationMessage(),
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[700],
-                      height: 1.4,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _getMotivationTitle(),
+                        style: textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _getMotivationMessage(),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey[600],
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -1226,94 +1223,80 @@ class _FunctionalCourseProgressBar extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressPoint(
-    double maxWidth,
-    double positionFactor,
-    String label,
-    bool isAchieved,
-  ) {
-    const double pointAreaWidth = 60.0;
-    const double circleDiameter = 20.0;
-
-    // Calculate the ideal centered position
-    final double idealLeft = (positionFactor * maxWidth) - (pointAreaWidth / 2);
-
-    // Clamp so the box does not overflow the edges
-    final double clampedLeft = idealLeft.clamp(0.0, maxWidth - pointAreaWidth);
-
-    return Positioned(
-      left: clampedLeft - 40,
-      top: 12,
-      child: SizedBox(
-        width: pointAreaWidth,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 600),
-              width: circleDiameter,
-              height: circleDiameter,
-              decoration: BoxDecoration(
-                color: isAchieved ? primaryColor : Colors.white,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isAchieved ? primaryColor : Colors.grey[400]!,
-                  width: 2.5,
-                ),
-                boxShadow:
-                    isAchieved
-                        ? [
-                          BoxShadow(
-                            color: primaryColor.withValues(alpha: 0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ]
-                        : null,
-              ),
-              child:
-                  isAchieved
-                      ? const Icon(Icons.check, color: Colors.white, size: 12)
-                      : null,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: textTheme.bodySmall?.copyWith(
-                color: isAchieved ? primaryColor : Colors.grey[600],
-                fontWeight: isAchieved ? FontWeight.bold : FontWeight.normal,
-                fontSize: 10,
-                height: 1.2,
-              ),
-            ),
-          ],
-        ),
+  Widget _buildMilestoneLabel(String label, double milestone) {
+    final isAchieved = courseProgress.progressPercentage >= milestone;
+    return Text(
+      label,
+      style: textTheme.bodySmall?.copyWith(
+        color: isAchieved ? primaryColor : Colors.grey[500],
+        fontWeight: isAchieved ? FontWeight.bold : FontWeight.normal,
+        fontSize: 14,
       ),
     );
+  }
+
+  List<Widget> _buildMilestoneMarkers(double maxWidth) {
+    final milestones = [0.0, 0.25, 0.5, 0.75, 1.0];
+    return milestones.map((milestone) {
+      final isAchieved = courseProgress.progressPercentage >= milestone;
+      final left = (maxWidth * milestone) - 3;
+
+      return Positioned(
+        top: 42,
+        left: left.clamp(0.0, maxWidth - 6),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 800 + (milestone * 400).round()),
+          curve: Curves.easeInOut,
+          width: 6,
+          height: 18,
+          decoration: BoxDecoration(
+            color: isAchieved ? primaryColor : Colors.grey[300],
+            borderRadius: BorderRadius.circular(3),
+            boxShadow:
+                isAchieved
+                    ? [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.4),
+                        blurRadius: 3,
+                        offset: const Offset(0, 1),
+                      ),
+                    ]
+                    : null,
+          ),
+        ),
+      );
+    }).toList();
   }
 
   IconData _getMotivationIcon() {
     if (courseProgress.progressPercentage >= 1.0) return Icons.celebration;
     if (courseProgress.progressPercentage >= 0.75) return Icons.star;
     if (courseProgress.progressPercentage >= 0.5) return Icons.trending_up;
-    if (courseProgress.progressPercentage >= 0.25)
+    if (courseProgress.progressPercentage >= 0.25) {
       return Icons.lightbulb_outline;
+    }
     return Icons.play_circle_outline;
+  }
+
+  String _getMotivationTitle() {
+    if (courseProgress.progressPercentage >= 1.0) return 'Course Completed! 🎉';
+    if (courseProgress.progressPercentage >= 0.75) return 'Almost There! 🌟';
+    if (courseProgress.progressPercentage >= 0.5) return 'Halfway Champion! 📈';
+    if (courseProgress.progressPercentage >= 0.25) return 'Great Start! 💡';
+    return 'Welcome Aboard! ▶️';
   }
 
   String _getMotivationMessage() {
     if (courseProgress.progressPercentage >= 1.0) {
-      return 'Congratulations! 🎉 You\'ve completed the entire course. You\'re now ready for the next level!';
+      return 'Amazing! You\'ve mastered the entire course. Ready for your next challenge?';
     } else if (courseProgress.progressPercentage >= 0.75) {
-      return 'Outstanding progress! 🌟 You\'re almost at the finish line. Keep pushing forward!';
+      return 'Outstanding progress! Just a few more lessons to complete your journey.';
     } else if (courseProgress.progressPercentage >= 0.5) {
-      return 'Great job! 📈 You\'re halfway through. Your consistency is paying off!';
+      return 'Excellent work! You\'re building great momentum. Keep it up!';
     } else if (courseProgress.progressPercentage >= 0.25) {
-      return 'Awesome progress! 💡 You\'re one step closer to mastering English—keep up the great work!';
+      return 'You\'re making fantastic progress! Every lesson brings you closer to fluency.';
     } else {
-      return 'Welcome to your English journey! ▶️ Every expert was once a beginner. Let\'s get started!';
+      return 'Your learning adventure begins now! Take it one lesson at a time.';
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -294,7 +295,14 @@ class _LearningScreenState extends State<LearningScreen> {
                       ),
                       const Spacer(),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (_, __, ___) => const ProfileMentorScreen(),
+                            ),
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: primaryColor,
                           side: BorderSide(

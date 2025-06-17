@@ -279,7 +279,7 @@ class MyApp extends StatelessWidget {
               PixelPreview(
                 presets: ScreenPresets(),
                 enabled: true,
-                child: const Placeholder(),
+                child: const WishlistScreen(),
               ),
             ],
           ),

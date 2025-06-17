@@ -579,6 +579,7 @@
 //   }
 // }
 
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:flutter/material.dart';
 // Reusing for consistency, though we'll make a new chip type to include icons
 
@@ -865,9 +866,11 @@ class _MyCourseScreenState extends State<MyCourseScreen> {
           child: InkWell(
             borderRadius: BorderRadius.circular(16.0),
             onTap: () {
-              // Handle card tap
-              print('Course tapped: ${course['title']}');
-              // Add your navigation or action logic here
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => CourseDetailScreen(),
+                ),
+              );
             },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -954,12 +957,7 @@ class _MyCourseScreenState extends State<MyCourseScreen> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: TextButton(
-                                  onPressed: () {
-                                    // Handle start course button tap
-                                    print(
-                                      'Start course tapped: ${course['title']}',
-                                    );
-                                  },
+                                  onPressed: () {},
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                     minimumSize: Size.zero,

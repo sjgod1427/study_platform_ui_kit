@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
               text: 'Login',
               onPressed: () {
                 Navigator.of(context).push(
-                  PageRouteBuilder(pageBuilder: (_, __, ___) => HomeScreen()),
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => MainScreen()),
                 );
               },
             ),

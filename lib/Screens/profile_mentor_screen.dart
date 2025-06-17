@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -333,7 +334,7 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
   }
 
   // Add this as a class member variable (outside any method)
-  Set<int> _favoritedCourseIndices = <int>{};
+  final Set<int> _favoritedCourseIndices = <int>{};
 
   // Updated _buildFeaturedClassList method
   Widget _buildFeaturedClassList(BuildContext context) {
@@ -392,7 +393,15 @@ class _ProfileMentorScreenState extends State<ProfileMentorScreen> {
               shadowColor: Colors.grey.withValues(alpha: 0.1),
               child: InkWell(
                 borderRadius: BorderRadius.circular(16.0),
-                onTap: () => {},
+                onTap:
+                    () => {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (_, __, ___) => const CourseDetailScreen(),
+                        ),
+                      ),
+                    },
                 child: Ink(
                   decoration: BoxDecoration(
                     color: Colors.white,

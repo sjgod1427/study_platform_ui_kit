@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/edit_profile_screen.dart';
 import 'package:canwa/Screens/faq_screen.dart';
 import 'package:canwa/Screens/help_and_support_screen.dart';
 import 'package:canwa/Screens/language_screen.dart';
@@ -61,7 +62,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
               onPressed: () {
-                // Navigate to edit profile screen
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => EditProfileScreen(),
+                  ),
+                );
               },
               child: Text(
                 'Edit Profile',

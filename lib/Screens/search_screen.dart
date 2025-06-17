@@ -1,3 +1,4 @@
+import 'package:canwa/Screens/course_detail_screen.dart';
 import 'package:canwa/Screens/profile_mentor_screen.dart';
 import 'package:canwa/Widgets/primary_text_button.dart';
 import 'package:flutter/material.dart';
@@ -408,7 +409,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (_, __, ___) => CourseDetailScreen(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             shape: RoundedRectangleBorder(
